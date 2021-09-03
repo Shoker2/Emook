@@ -5,7 +5,10 @@ import string
 import time
 from discord.ext import commands
 
-Moder = False #False - если нет модерации у заданий, True - если есть
+Moder = False		#False - если нет модерации у заданий, True - если есть
+apiFireBase = 'AIzaSyBZ89phjIKS4ev_b_SOXx2kl5NMYPMc0R4'		#Для базы данных firebase
+databaseURL = 'https://botest-ec7b7-default-rtdb.firebaseio.com'
+apiBot = 'ODgyOTc1NzYwODQ2MDMyOTA2.YTDNQg.VHfLBo8CnOHsisIBoDPExnEuI7c' #Для бота
 
 def new_quest(z):
 	plus = 0
@@ -36,9 +39,9 @@ def grs(y):
 	return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
 config = {
-  "apiKey": "AIzaSyBZ89phjIKS4ev_b_SOXx2kl5NMYPMc0R4",
+  "apiKey": apiFireBase,
   "authDomain": "projectId.firebaseapp.com",
-  "databaseURL": "https://botest-ec7b7-default-rtdb.firebaseio.com",
+  "databaseURL": databaseURL,
   "storageBucket": "projectId.appspot.com"
 }
 
@@ -163,4 +166,4 @@ async def help(ctx: discord.Message):
 
 
 
-bot.run('ODgyOTc1NzYwODQ2MDMyOTA2.YTDNQg.VHfLBo8CnOHsisIBoDPExnEuI7c')
+bot.run(apiBot)
