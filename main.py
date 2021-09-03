@@ -159,7 +159,7 @@ async def help(ctx: discord.Message):
 		embed.set_footer(text=">help - Просмотр команд бота")
 		await ctx.send(embed=embed)
 	else:
-		await ctx.send('Я работаю только в ЛС')
+		await ctx.send('Я работаю только в ЛС.')
 
 
 
