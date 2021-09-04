@@ -164,6 +164,4 @@ async def help(ctx: discord.Message):
 	else:
 		await ctx.send('Я работаю только в ЛС')
 
-
-
 bot.run(Token)
