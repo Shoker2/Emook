@@ -38,6 +38,15 @@ def new_quest(z):
 def grs(y):
 	return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
+def GuideUrl(title, text, url):
+	embed = discord.Embed(title=title, description=text, color=0xbd7800)
+	embed.set_image(url=url)
+	return embed
+
+def destext(title, text):
+	embed = discord.Embed(title=title, description=text, color=0xbd7800)
+	return embed
+
 config = {
   "apiKey": apiKey,
   "authDomain": "projectId.firebaseapp.com",
@@ -61,21 +70,23 @@ bot.remove_command('help')
 async def on_ready():
 	print('Мы вошли как {0.user}'.format(bot))
 
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound ):
+        await ctx.send(embed = discord.Embed(title = 'Данной команды не существует', description = 'Чтобы узнать доступные команды напишите ">help"', color=0xbd7800))
+
 @bot.command()
 async def Заказ(ctx: discord.Message):
 	if ctx.guild is None and not ctx.author.bot:
-		embed=discord.Embed(title="Заказ вводится одним сообщением. В случае неправильного написания бот отменит заказ", color=0xbd7800)
-		embed.set_author(name="Как оформить заказ")
-		embed.add_field(name="1. Ваш ник", value="2. Название заказа", inline=False)
-		embed.add_field(name="3. Вознаграждение", value="4. Описание (Возможное уточнее заказа, Адресс доставки и т.д.)", inline=False)
-		embed.set_footer(text="Нужно обязательно заполнить все поля")
-		await ctx.send(embed=embed)
+		
+		await ctx.send(embed = destext('Как оформить заказ', '**1. Ваш ник\n2. Название заказа\n3. Вознаграждение\n4. Описание (Возможное уточнее заказа, Адресс доставки и т.д.)**\n\nЗаказ вводится одним сообщением. В случае неправильного написания бот отменит заказ\nНужно обязательно заполнить все поля'))
+		
 		time.sleep(0.01)
 		nord = 0
 		while nord == 0:
 			time.sleep(0.01)
 			await ctx.send('Введите свой заказ')
-			time.sleep(0.01)
+			time.sleep(0.5)
 			NewOrder = await bot.wait_for("message")
 			time.sleep(0.01)
 			embed=discord.Embed(title="Подтверждение", color=0xbd7800)
@@ -156,11 +167,63 @@ async def Удалить(ctx: discord.Message, code):
 @bot.command()
 async def help(ctx: discord.Message):
 	if ctx.guild is None and not ctx.author.bot:
-		embed=discord.Embed(title="Команды", color=0xbd7800)
-		embed.add_field(name=">Заказ - Создать заказ", value=">Принять <ID заказа> - Принять заказ", inline=False)
-		embed.add_field(name=">Доска - Просмотр всех заказов", value=">Удалить <ID заказа> - Удалить заказ", inline=False)
-		embed.set_footer(text=">help - Просмотр команд бота")
-		await ctx.send(embed=embed)
+		await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Доска - Просмотр всех заказов\n>Удалить <ID заказа> - Удалить заказ\n>Гайд - небольшие гайды\n>help - Просмотр команд бота'))
+	else:
+		await ctx.send('Я работаю только в ЛС')
+
+@bot.command()
+async def Гайд(ctx: discord.Message):
+	if ctx.guild is None and not ctx.author.bot:
+		await ctx.send(embed=destext('Напишите, какой гайд вы хотите увидеть', '"Размещение" - Как разместить заказ на базе\n"Лобби" - Как попасть  в лобби с заказами\n"Принять" - Как принять задание'))
+		time.sleep(0.01)
+		guide = await bot.wait_for("message")
+		time.sleep(0.2)
+		if guide.content == 'Размещение' or guide.content == 'размещение':
+			await ctx.send('**Как разместить заказ на базе**')
+			await ctx.send(embed=GuideUrl('Размещение задания ч.1','Поставьте табличку на стену. На табличке должно быть написано название заказа и ID','https://i.ibb.co/6m9krVY/javaw-6-DMI7-Pv-Yx-M.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Размещение задания ч.2','Переименуйте 1 листок бумаги в ID заказа','https://i.ibb.co/c1BSL0L/javaw-H5-UYj7fy-V1.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Размещение задания ч.3','Откройте сундук с табличкой "Не взятые задания"','https://i.ibb.co/xX2N1zZ/javaw-gnva-MBg-H9a.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Размещение задания ч.4','Положите в сундук переименованный листок','https://i.ibb.co/BGPNQ94/javaw-Lwh5dz-Rekb.png'))
+		elif guide.content == 'Лобби' or guide.content == 'лобби':
+			await ctx.send('**Как попасть  в лобби с заказами**')
+			await ctx.send(embed=GuideUrl('Координаты базы ч.1','В хабе нужно ехать по зелёной ветке','https://i.ibb.co/ZmCc4Lm/javaw-wtw-L6-Bg5-CI.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Координаты базы ч.2','На координатах x = 2713, z = -1 находится проход к порталу','https://i.ibb.co/r0dt1Ng/javaw-JLMYu2jahd.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Координаты базы ч.3','В конце проходу находится портал на базу','https://i.ibb.co/89KQBkP/javaw-Zbf83-Arh-ZD.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Проход к лобби ч.1','После выхода из портала нужно подойти месту открытия прохода на базу','https://i.ibb.co/bmJJftp/javaw-lrck-Vp-N59-N.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Проход к лобби ч.2','Там нужно нажать на кнопку','https://i.ibb.co/nmH74HR/javaw-q-Ej-Ae8qi-N4.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Проход к лобби ч.3','И быстро запрыгнуть в открывшийся проход','https://i.ibb.co/Nn0j6QP/javaw-RLCDy2-GVvz.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Проход к лобби ч.4','Нужно прыгнуть в воду','https://i.ibb.co/GP0wkCm/javaw-Kdgb-GXz-SI0.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Проход к лобби ч.5','В проходе справа есть лифт','https://i.ibb.co/swy3zNw/javaw-e-Re-Soc7f-La.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Проход к лобби ч.6','Нужно зайти в него и нажать на кнопку','https://i.ibb.co/ChVDLLG/javaw-g-Up98l-HVg1.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Проход к лобби ч.7','После спуска вниз нужно идти вперёд по коридору в самый конец','https://i.ibb.co/34RV9yJ/javaw-l-Awv-Q1x-QBs.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Проход к лобби ч.8','Поздравляю! Вы в лобби с заказами','https://i.ibb.co/D9NMD2x/javaw-E1-Ye-Gsh5-D6.png'))
+		elif guide.content == 'Принять' or guide.content == 'принять':
+			await ctx.send('**Как принять задание**')
+			await ctx.send(embed=GuideUrl('Получение залания ч.1','Найдите подходящее задание в лобби. Запомните его ID','https://i.ibb.co/6m9krVY/javaw-6-DMI7-Pv-Yx-M.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Получение залания ч.2','Откройте сундук с табличкой "Не взятые задания"','https://i.ibb.co/xX2N1zZ/javaw-gnva-MBg-H9a.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Получение залания ч.3','Возмите листок с ID этого задания. (Если листка нет, то это задание кто-то взял)','https://i.ibb.co/BGPNQ94/javaw-Lwh5dz-Rekb.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Получение залания ч.4','Напиши мне команду ">Принять <ID задания>"','https://i.ibb.co/yS5dC4G/Discord-CVcu7h3rrl.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Получение залания ч.5','Если задание ещё не кто не взял, то в ответ вы бот напишет - "Вы приняли задание"','https://i.ibb.co/jgdRgXB/Discord-G7i-I5-YYMp1.png'))
+			time.sleep(0.2)
+			await ctx.send(embed=GuideUrl('Завершение задания','Если вы выполнили задание и получили награду, то задание нужно удалить.\nВы можете договориться, кто удалит задание.\nНапишите мне ">Удалить <ID заказа>" для удаления задания.','https://i.ibb.co/5jHLYcN/Discord-s-Tf-TQd-Aj3-Z.png'))
+			time.sleep(0.2)
 	else:
 		await ctx.send('Я работаю только в ЛС')
 
