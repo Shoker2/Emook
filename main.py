@@ -28,12 +28,15 @@ def new_quest(z):
 				replay = 1
 	
 	text = z.splitlines()
-	z = 'Ник - "' + text[0] + '"\nНазвание заказа - "' + text[1] + '"\nВознаграждение - "' + text[3] + '"\nОписание - "' + text[3] + '"' #\n **Уже кто-то взял это задание**
-	if Moder == False:
-		base.child("quests").update({ids: z})
+	if len(text) == 4:
+		z = 'Ник - "' + text[0] + '"\nНазвание заказа - "' + text[1] + '"\nВознаграждение - "' + text[3] + '"\nОписание - "' + text[3] + '"' #\n **Уже кто-то взял это задание**
+		if Moder == False:
+			base.child("quests").update({ids: z})
+		else:
+			base.child("Order").update({ids: z})
+		return text[1], ids
 	else:
-		base.child("Order").update({ids: z})
-	return text[1], ids
+		return 'error', 'error'
 
 def grs(y):
 	return ''.join(random.choice(string.ascii_letters) for x in range(y))
@@ -46,6 +49,11 @@ def GuideUrl(title, text, url):
 def destext(title, text):
 	embed = discord.Embed(title=title, description=text, color=0xbd7800)
 	return embed
+
+def check(ctx):
+    def inner(msg):
+        return msg.author == ctx.author
+    return inner
 
 config = {
   "apiKey": apiKey,
@@ -78,34 +86,33 @@ async def on_command_error(ctx, error):
 @bot.command()
 async def Заказ(ctx: discord.Message):
 	if ctx.guild is None and not ctx.author.bot:
-		
 		await ctx.send(embed = destext('Как оформить заказ', '**1. Ваш ник\n2. Название заказа\n3. Вознаграждение\n4. Описание (Возможное уточнее заказа, Адресс доставки и т.д.)**\n\nЗаказ вводится одним сообщением. В случае неправильного написания бот отменит заказ\nНужно обязательно заполнить все поля'))
-		
 		time.sleep(0.01)
 		nord = 0
 		while nord == 0:
 			time.sleep(0.01)
 			await ctx.send('Введите свой заказ')
-			time.sleep(0.5)
-			NewOrder = await bot.wait_for("message")
+			NewOrder = await bot.wait_for("message", check=check(ctx))
 			time.sleep(0.01)
 			embed=discord.Embed(title="Подтверждение", color=0xbd7800)
 			embed.add_field(name='Если введёные данные верны напишите "Готово"', value='Если же вы ошиблись, то напишите "Повтор"', inline=False)
 			embed.set_footer(text="Для отмены напишите любое слово")
 			await ctx.send(embed=embed)
+			Done = await bot.wait_for("message", check=check(ctx))
 			time.sleep(0.01)
-			Done = await bot.wait_for("message")
-			time.sleep(0.01)
-			
 			if Done.content == 'Готово':
 				Zag, code = new_quest(NewOrder.content)
-				nord = 1
-				if Moder == False:
-					await ctx.send('Готово!\nID вашего заказа - "' + code + '"\nТеперь вы можете добавть табличку с заданием на нашу базу\nВот примерный вид таблички:')
+				if Zag != 'error':
+					nord = 1
+					if Moder == False:
+						await ctx.send('Готово!\nID вашего заказа - "' + code + '"\nТеперь вы можете добавть табличку с заданием на нашу базу\nВот примерный вид таблички:')
+					else:
+						await ctx.send('Готово!\nID вашего заказа - "' + code + '"\nТеперь ваш заказ отправлен на модерацию\nПосле проверки вы можете поставить табличку с вашим заказом на нашу базу\nВот примерный вид таблички:')
+					embed=discord.Embed(title=Zag, description=code, color=0xbd7800)
+					await ctx.send(embed=embed)
 				else:
-					await ctx.send('Готово!\nID вашего заказа - "' + code + '"\nТеперь ваш заказ отправлен на модерацию\nПосле проверки вы можете поставить табличку с вашим заказом на нашу базу\nВот примерный вид таблички:')
-				embed=discord.Embed(title=Zag, description=code, color=0xbd7800)
-				await ctx.send(embed=embed)
+					await ctx.send(embed=destext('Ошибка','Неверный ввод даных'))
+					nord = 1
 			elif Done.content == 'Повтор':
 				continue
 			else:
@@ -121,8 +128,7 @@ async def Принять(ctx: discord.Message, code):
 			embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
 			embed.add_field(name='Чтобы взять задание напишите "Принять"', value='Для отмены напишите любое слово', inline=False)
 			await ctx.send(embed=embed)
-			time.sleep(0.01)
-			yes = await bot.wait_for("message")
+			yes = await bot.wait_for("message", check=check(ctx))
 			if yes.content == 'Принять':
 				UpdateQuest = str(quest.val()) + '\n*'
 				base.child("quests").update({code: UpdateQuest})
@@ -156,8 +162,7 @@ async def Удалить(ctx: discord.Message, code):
 		
 		embed.add_field(name='Чтобы удалить задание напишите "Удалить"', value='Для отмены напишите любое слово', inline=False)
 		await ctx.send(embed=embed)
-		time.sleep(0.01)
-		delite = await bot.wait_for("message")
+		delite = await bot.wait_for("message", check=check(ctx))
 		if delite.content == 'Удалить':
 			base.child("quests").child(code).remove()
 			await ctx.send('Задание ID - "' + code + '" было удалено')
@@ -175,8 +180,7 @@ async def help(ctx: discord.Message):
 async def Гайд(ctx: discord.Message):
 	if ctx.guild is None and not ctx.author.bot:
 		await ctx.send(embed=destext('Напишите, какой гайд вы хотите увидеть', '"Размещение" - Как разместить заказ на базе\n"Лобби" - Как попасть  в лобби с заказами\n"Принять" - Как принять задание'))
-		time.sleep(0.01)
-		guide = await bot.wait_for("message")
+		guide = await bot.wait_for("message", check=check(ctx))
 		time.sleep(0.2)
 		if guide.content == 'Размещение' or guide.content == 'размещение':
 			await ctx.send('**Как разместить заказ на базе**')
