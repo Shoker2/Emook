@@ -29,7 +29,7 @@ def new_quest(z):
 	
 	text = z.splitlines()
 	if len(text) == 4:
-		z = 'Ник - "' + text[0] + '"\nНазвание заказа - "' + text[1] + '"\nВознаграждение - "' + text[3] + '"\nОписание - "' + text[3] + '"' #\n **Уже кто-то взял это задание**
+		z = 'Ник - "' + text[0] + '"\nНазвание заказа - "' + text[1] + '"\nВознаграждение - "' + text[2] + '"\nОписание - "' + text[3] + '"' #\n **Уже кто-то взял это задание**
 		if Moder == False:
 			base.child("quests").update({ids: z})
 		else:
