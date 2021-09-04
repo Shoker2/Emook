@@ -143,7 +143,7 @@ async def Принять(ctx: discord.Message, code):
 @bot.command()
 async def Доска(ctx: discord.Message, *arg):
 	if ctx.guild is None and not ctx.author.bot:
-		if arg[0] == 'в':
+		if len(arg) == 0:
 			t = base.child("quests").get()
 			for user in t.each():
 				if str(user.key()) != 'test' and str(user.val())[-1] !='*':
@@ -156,7 +156,7 @@ async def Доска(ctx: discord.Message, *arg):
 					s.append([str(user.key()),str(user.val())])
 			rand = random.randint(0, len(s)-1)
 			await ctx.send(embed=destext('ID - "' + s[rand][0] + '"', '**' + s[rand][1] + '**' ))
-		elif int(arg[0]) == int(arg[0]) and int(arg[1]) == int(arg[1]):
+		elif len(arg) == 2 and int(arg[0]) == int(arg[0]) and int(arg[1]) == int(arg[1]):
 			t = base.child("quests").get()
 			ints = 0
 			for user in t.each():
@@ -188,7 +188,7 @@ async def Удалить(ctx: discord.Message, code):
 @bot.command()
 async def help(ctx: discord.Message):
 	if ctx.guild is None and not ctx.author.bot:
-		await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Доска в - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n>Удалить <ID заказа> - Удалить заказ\n>Гайд - небольшие гайды\n>help - Просмотр команд бота**'))
+		await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Доска - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n>Удалить <ID заказа> - Удалить заказ\n>Гайд - небольшие гайды\n>help - Просмотр команд бота**'))
 	else:
 		await ctx.send('Я работаю только в ЛС')
 
