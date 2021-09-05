@@ -77,6 +77,7 @@ bot.remove_command('help')
 @bot.event
 async def on_ready():
 	print('Мы вошли как {0.user}'.format(bot))
+	await bot.change_presence(activity=discord.Game(name="Minecraft"))
 
 @bot.event
 async def on_command_error(ctx, error):
