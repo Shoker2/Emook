@@ -83,6 +83,11 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound ):
         await ctx.send(embed = discord.Embed(title = 'Данной команды не существует', description = 'Чтобы узнать доступные команды напишите ">help"', color=0xbd7800))
 
+@client.event
+async def on_message(message):
+    if message.content.startswith('Я работаю только в ЛС'):
+        await client.send_message(message.channel, 'Ты чего меня порадируешь?')
+
 @bot.command()
 async def Заказ(ctx: discord.Message):
 	if ctx.guild is None and not ctx.author.bot:
