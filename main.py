@@ -9,6 +9,7 @@ Moder = False		#False - если нет модерации у заданий, Tr
 apiKey = 'AIzaSyBZ89phjIKS4ev_b_SOXx2kl5NMYPMc0R4'		#Для базы данных firebase
 databaseURL = 'https://botest-ec7b7-default-rtdb.firebaseio.com'
 Token = 'ODgyOTc1NzYwODQ2MDMyOTA2.YTDNQg.VHfLBo8CnOHsisIBoDPExnEuI7c' #Для бота
+game = 'Minecraft' #В статусе бота "Игрет в ..."
 
 def new_quest(z):
 	plus = 0
@@ -71,7 +72,7 @@ bot.remove_command('help')
 @bot.event
 async def on_ready():
 	print('Мы вошли как {0.user}'.format(bot))
-	await bot.change_presence(activity=discord.Game(name="Minecraft"))
+	await bot.change_presence(activity=discord.Game(name=game))
 	if (str(base.child("quests").get().val())) == 'None':
 		base.child("quests").update({'test': 'test'})
 
