@@ -65,12 +65,6 @@ config = {
 firebase = pyrebase.initialize_app(config)
 base = firebase.database()
 
-if (str(base.child("quests").get().val())) == 'None':
-	base.child("quests").update({'test': 'test'})
-
-if (str(base.child("Order").get().val())) == 'None' and Moder == True:
-	base.child("Order").update({'test': 'test'})
-
 bot = commands.Bot(command_prefix='>')
 bot.remove_command('help')
 
@@ -78,6 +72,11 @@ bot.remove_command('help')
 async def on_ready():
 	print('Мы вошли как {0.user}'.format(bot))
 	await bot.change_presence(activity=discord.Game(name="Minecraft"))
+	if (str(base.child("quests").get().val())) == 'None':
+		base.child("quests").update({'test': 'test'})
+
+	if (str(base.child("Order").get().val())) == 'None' and Moder == True:
+		base.child("Order").update({'test': 'test'})
 
 @bot.event
 async def on_command_error(ctx, error):
