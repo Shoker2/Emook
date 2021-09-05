@@ -9,7 +9,7 @@ Moder = False		#False - если нет модерации у заданий, Tr
 apiKey = 'AIzaSyBZ89phjIKS4ev_b_SOXx2kl5NMYPMc0R4'		#Для базы данных firebase
 databaseURL = 'https://botest-ec7b7-default-rtdb.firebaseio.com'
 Token = 'ODgyOTc1NzYwODQ2MDMyOTA2.YTDNQg.VHfLBo8CnOHsisIBoDPExnEuI7c' #Для бота
-game = 'Minecraft' #В статусе бота "Игрет в ..."
+game = 'хорошего помощника' #В статусе бота "Игрет в ..."
 
 def new_quest(z):
 	plus = 0
