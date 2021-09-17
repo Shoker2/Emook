@@ -242,6 +242,65 @@ async def Гайд(ctx: discord.Message):
 	else:
 		await ctx.send('Я работаю только в ЛС')
 
+@bot.command()
+async def add(ctx: discord.Message, *arg):
+	author_id = ctx.message.author.id
+	if (str(base.child(author_id).get().val())) == 'None':
+		base.child(author_id).update({'vbg092g49s87yА*(Р)ц': 'test'})
+	t = base.child(author_id).get()
+	
+	title = ' '.join(arg)
+	
+	if title != '':
+		await ctx.send('Теперь напишите текст заметки')
+		text = await bot.wait_for("message", check=check(ctx))
+		
+		base.child(author_id).update({title: text.content})
+		await ctx.send('Готово')
+	else:
+		await ctx.send(embed = destext('Ошибка', 'Отсутствует заголовок'))
 
+@bot.command()
+async def remove(ctx: discord.Message, *arg):
+	title = ' '.join(arg)
+	
+	author_id = ctx.message.author.id
+	text = str(base.child(str(author_id) + '/' + title).get().val())
+	if (text) == 'None':
+		await ctx.send(embed = destext('Ошибка', 'Такой заметки не найдено'))
+	else:
+		base.child(str(author_id) + '/' + title).remove()
+		await ctx.send('Готово')
+
+@bot.command()
+async def list(ctx):
+	author_id = ctx.message.author.id
+	if (str(base.child(author_id).get().val())) == 'None':
+		base.child(author_id).update({'vbg092g49s87yА*(Р)ц': 'test'})
+	t = base.child(author_id).get()
+	
+	await ctx.send('Ваши заметки:\n')
+	
+	for ind in t.each():
+		if str(ind.key()) != 'vbg092g49s87yА*(Р)ц': 
+			await ctx.send('"' + str(ind.key()) + '"')
+
+@bot.command()
+async def read(ctx, *arg):
+	title = ' '.join(arg)
+	
+	author_id = ctx.message.author.id
+	text = str(base.child(str(author_id) + '/' + title).get().val())
+	if (text) == 'None':
+		await ctx.send(embed = destext('Ошибка', 'Такой заметки не найдено'))
+	else:
+		await ctx.send(embed = destext(title, text))
+
+@bot.command()
+async def help(ctx: discord.Message):
+	if ctx.guild is None and not ctx.author.bot:
+		await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n\n>Доска - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n\n>Удалить <ID заказа> - Удалить заказ\n>Гайд - небольшие гайды\n\n>add <Заголовок> - Создать заметку\n>list - Просмотреть список заголовков заметок\n>read <Заголовок> - Просмотр заметки\n>remove <Заголовок> - Удалить заметку\n\n>help - Просмотр команд бота**'))
+	else:
+		await ctx.send('Я работаю только в ЛС')
 
 bot.run(Token)
