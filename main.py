@@ -188,13 +188,6 @@ async def Удалить(ctx: discord.Message, code):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def help(ctx: discord.Message):
-	if ctx.guild is None and not ctx.author.bot:
-		await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Доска - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n>Удалить <ID заказа> - Удалить заказ\n>Гайд - небольшие гайды\n>help - Просмотр команд бота**'))
-	else:
-		await ctx.send('Я работаю только в ЛС')
-
-@bot.command()
 async def Гайд(ctx: discord.Message):
 	if ctx.guild is None and not ctx.author.bot:
 		await ctx.send(embed=destext('Напишите, какой гайд вы хотите увидеть', '"Размещение" - Как разместить заказ на базе\n"Лобби" - Как попасть  в лобби с заказами\n"Принять" - Как принять задание'))
@@ -248,5 +241,7 @@ async def Гайд(ctx: discord.Message):
 			time.sleep(0.2)
 	else:
 		await ctx.send('Я работаю только в ЛС')
+
+
 
 bot.run(Token)
