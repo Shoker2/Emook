@@ -4,12 +4,11 @@ import random
 import string
 import time
 from discord.ext import commands
-from boto.s3.connection import S3Connection
 
 Moder = False		#False - если нет модерации у заданий, True - если есть
 apiKey = 'AIzaSyBZ89phjIKS4ev_b_SOXx2kl5NMYPMc0R4'		#Для базы данных firebase
 databaseURL = 'https://botest-ec7b7-default-rtdb.firebaseio.com'
-Token = S3Connection(os.environ['TOKEN'])	#Для бота
+Token = 'ODgyOTc1NzYwODQ2MDMyOTA2.YTDNQg.VHfLBo8CnOHsisIBoDPExnEuI7c'	#Для бота
 game = 'помощника'	#В статусе бота "Игрет в ..."
 prefix = '>'	#С чего начинаются команды у бота
 
