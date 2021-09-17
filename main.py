@@ -188,13 +188,6 @@ async def Удалить(ctx: discord.Message, code):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def help(ctx: discord.Message):
-	if ctx.guild is None and not ctx.author.bot:
-		await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Доска - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n>Удалить <ID заказа> - Удалить заказ\n>Гайд - небольшие гайды\n>add <Заголовок> - Создать заметку\n>list - Просмотреть список заголовков заметок\n>read <Заголовок> - Просмотр заметки\n>remove <Заголовок> - Удалить заметку\n>help - Просмотр команд бота**'))
-	else:
-		await ctx.send('Я работаю только в ЛС')
-
-@bot.command()
 async def Гайд(ctx: discord.Message):
 	if ctx.guild is None and not ctx.author.bot:
 		await ctx.send(embed=destext('Напишите, какой гайд вы хотите увидеть', '"Размещение" - Как разместить заказ на базе\n"Лобби" - Как попасть  в лобби с заказами\n"Принять" - Как принять задание'))
@@ -258,7 +251,7 @@ async def add(ctx: discord.Message, *arg):
 	
 	title = ' '.join(arg)
 	
-	if arg[0] != '':
+	if title != '':
 		await ctx.send('Теперь напишите текст заметки')
 		text = await bot.wait_for("message", check=check(ctx))
 		
@@ -300,5 +293,12 @@ async def read(ctx, *arg):
 		await ctx.send(embed = destext('Ошибка', 'Такой заметки не найдено'))
 	else:
 		await ctx.send(embed = destext(title, text))
+
+@bot.command()
+async def help(ctx: discord.Message):
+	if ctx.guild is None and not ctx.author.bot:
+		await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Доска - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n>Удалить <ID заказа> - Удалить заказ\n>Гайд - небольшие гайды\n>add <Заголовок> - Создать заметку\n>list - Просмотреть список заголовков заметок\n\n>read <Заголовок> - Просмотр заметки\n>remove <Заголовок> - Удалить заметку\n\n>help - Просмотр команд бота**'))
+	else:
+		await ctx.send('Я работаю только в ЛС')
 
 bot.run(Token)
