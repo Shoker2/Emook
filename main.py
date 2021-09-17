@@ -279,7 +279,7 @@ async def remove(ctx: discord.Message, *arg):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def list(ctx):
+async def list(ctx: discord.Message):
 	if ctx.guild is None and not ctx.author.bot:
 		author_id = ctx.message.author.id
 		if (str(base.child(author_id).get().val())) == 'None':
@@ -295,7 +295,7 @@ async def list(ctx):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def read(ctx, *arg):
+async def read(ctx: discord.Message, *arg):
 	if ctx.guild is None and not ctx.author.bot:
 		title = ' '.join(arg)
 		
