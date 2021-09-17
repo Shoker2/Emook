@@ -244,57 +244,69 @@ async def Гайд(ctx: discord.Message):
 
 @bot.command()
 async def add(ctx: discord.Message, *arg):
-	author_id = ctx.message.author.id
-	if (str(base.child(author_id).get().val())) == 'None':
-		base.child(author_id).update({'vbg092g49s87yА*(Р)ц': 'test'})
-	t = base.child(author_id).get()
-	
-	title = ' '.join(arg)
-	
-	if title != '':
-		await ctx.send('Теперь напишите текст заметки')
-		text = await bot.wait_for("message", check=check(ctx))
+	if ctx.guild is None and not ctx.author.bot:
+		author_id = ctx.message.author.id
+		if (str(base.child(author_id).get().val())) == 'None':
+			base.child(author_id).update({'vbg092g49s87yА*(Р)ц': 'test'})
+		t = base.child(author_id).get()
 		
-		base.child(author_id).update({title: text.content})
-		await ctx.send('Готово')
+		title = ' '.join(arg)
+		
+		if title != '':
+			await ctx.send('Теперь напишите текст заметки')
+			text = await bot.wait_for("message", check=check(ctx))
+			
+			base.child(author_id).update({title: text.content})
+			await ctx.send('Готово')
+		else:
+			await ctx.send(embed = destext('Ошибка', 'Отсутствует заголовок'))
 	else:
-		await ctx.send(embed = destext('Ошибка', 'Отсутствует заголовок'))
+		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
 async def remove(ctx: discord.Message, *arg):
-	title = ' '.join(arg)
-	
-	author_id = ctx.message.author.id
-	text = str(base.child(str(author_id) + '/' + title).get().val())
-	if (text) == 'None':
-		await ctx.send(embed = destext('Ошибка', 'Такой заметки не найдено'))
+	if ctx.guild is None and not ctx.author.bot:
+		title = ' '.join(arg)
+		
+		author_id = ctx.message.author.id
+		text = str(base.child(str(author_id) + '/' + title).get().val())
+		if (text) == 'None':
+			await ctx.send(embed = destext('Ошибка', 'Такой заметки не найдено'))
+		else:
+			base.child(str(author_id) + '/' + title).remove()
+			await ctx.send('Готово')
 	else:
-		base.child(str(author_id) + '/' + title).remove()
-		await ctx.send('Готово')
+		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
 async def list(ctx):
-	author_id = ctx.message.author.id
-	if (str(base.child(author_id).get().val())) == 'None':
-		base.child(author_id).update({'vbg092g49s87yА*(Р)ц': 'test'})
-	t = base.child(author_id).get()
-	
-	await ctx.send('Ваши заметки:\n')
-	
-	for ind in t.each():
-		if str(ind.key()) != 'vbg092g49s87yА*(Р)ц': 
-			await ctx.send('"' + str(ind.key()) + '"')
+	if ctx.guild is None and not ctx.author.bot:
+		author_id = ctx.message.author.id
+		if (str(base.child(author_id).get().val())) == 'None':
+			base.child(author_id).update({'vbg092g49s87yА*(Р)ц': 'test'})
+		t = base.child(author_id).get()
+		
+		await ctx.send('Ваши заметки:\n')
+		
+		for ind in t.each():
+			if str(ind.key()) != 'vbg092g49s87yА*(Р)ц': 
+				await ctx.send('"' + str(ind.key()) + '"')
+	else:
+		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
 async def read(ctx, *arg):
-	title = ' '.join(arg)
-	
-	author_id = ctx.message.author.id
-	text = str(base.child(str(author_id) + '/' + title).get().val())
-	if (text) == 'None':
-		await ctx.send(embed = destext('Ошибка', 'Такой заметки не найдено'))
+	if ctx.guild is None and not ctx.author.bot:
+		title = ' '.join(arg)
+		
+		author_id = ctx.message.author.id
+		text = str(base.child(str(author_id) + '/' + title).get().val())
+		if (text) == 'None':
+			await ctx.send(embed = destext('Ошибка', 'Такой заметки не найдено'))
+		else:
+			await ctx.send(embed = destext(title, text))
 	else:
-		await ctx.send(embed = destext(title, text))
+		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
 async def help(ctx: discord.Message):
