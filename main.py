@@ -86,7 +86,7 @@ async def on_command_error(ctx, error):
         await ctx.send(embed = discord.Embed(title = 'Данной команды не существует', description = 'Чтобы узнать доступные команды напишите ">help"', color=0xbd7800))
 
 @bot.command()
-async def Заказ(ctx: discord.Message):
+async def Заказ(ctx):
 	if ctx.guild is None and not ctx.author.bot:
 		await ctx.send(embed = destext('Как оформить заказ', '**1. Ваш ник\n2. Название заказа\n3. Вознаграждение\n4. Описание (Возможное уточнее заказа, Адресс доставки и т.д.)**\n\nЗаказ вводится одним сообщением. В случае неправильного написания бот отменит заказ\nНужно обязательно заполнить все поля'))
 		time.sleep(0.01)
@@ -123,7 +123,7 @@ async def Заказ(ctx: discord.Message):
 		await ctx.send('Я работаю только в ЛС')
 	
 @bot.command()
-async def Принять(ctx: discord.Message, code):
+async def Принять(ctx, code):
 	if ctx.guild is None and not ctx.author.bot:
 		quest = base.child("quests/" + code).get()
 		if str(quest.val())[-1] != '*':
@@ -143,7 +143,7 @@ async def Принять(ctx: discord.Message, code):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def Доска(ctx: discord.Message, *arg):
+async def Доска(ctx, *arg):
 	if ctx.guild is None and not ctx.author.bot:
 		if len(arg) == 0:
 			t = base.child("quests").get()
@@ -170,7 +170,7 @@ async def Доска(ctx: discord.Message, *arg):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def Удалить(ctx: discord.Message, code):
+async def Удалить(ctx, code):
 	if ctx.guild is None and not ctx.author.bot:
 		quest = base.child("quests/" + code).get()
 		if str(quest.val())[-1] != '*':
@@ -188,7 +188,7 @@ async def Удалить(ctx: discord.Message, code):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def Гайд(ctx: discord.Message):
+async def Гайд(ctx):
 	if ctx.guild is None and not ctx.author.bot:
 		await ctx.send(embed=destext('Напишите, какой гайд вы хотите увидеть', '"Размещение" - Как разместить заказ на базе\n"Лобби" - Как попасть  в лобби с заказами\n"Принять" - Как принять задание'))
 		guide = await bot.wait_for("message", check=check(ctx))
@@ -243,7 +243,7 @@ async def Гайд(ctx: discord.Message):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def add(ctx: discord.Message, *arg):
+async def add(ctx, *arg):
 	if ctx.guild is None and not ctx.author.bot:
 		author_id = ctx.message.author.id
 		if (str(base.child(author_id).get().val())) == 'None':
@@ -264,7 +264,7 @@ async def add(ctx: discord.Message, *arg):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def remove(ctx: discord.Message, *arg):
+async def remove(ctx, *arg):
 	if ctx.guild is None and not ctx.author.bot:
 		title = ' '.join(arg)
 		
@@ -279,7 +279,7 @@ async def remove(ctx: discord.Message, *arg):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def list(ctx: discord.Message):
+async def list(ctx):
 	if ctx.guild is None and not ctx.author.bot:
 		author_id = ctx.message.author.id
 		if (str(base.child(author_id).get().val())) == 'None':
@@ -295,7 +295,7 @@ async def list(ctx: discord.Message):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def read(ctx: discord.Message, *arg):
+async def read(ctx, *arg):
 	if ctx.guild is None and not ctx.author.bot:
 		title = ' '.join(arg)
 		
@@ -309,7 +309,7 @@ async def read(ctx: discord.Message, *arg):
 		await ctx.send('Я работаю только в ЛС')
 
 @bot.command()
-async def help(ctx: discord.Message):
+async def help(ctx):
 	if ctx.guild is None and not ctx.author.bot:
 		await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Удалить <ID заказа> - Удалить заказ\n\n>Доска - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n\n>Гайд - небольшие гайды\n\n>add <Заголовок> - Создать заметку\n>list - Просмотреть список заголовков заметок\n>read <Заголовок> - Просмотр заметки\n>remove <Заголовок> - Удалить заметку\n\n>help - Просмотр команд бота**'))
 	else:
