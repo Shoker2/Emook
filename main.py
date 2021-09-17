@@ -257,11 +257,15 @@ async def add(ctx: discord.Message, *arg):
 	t = base.child(author_id).get()
 	
 	title = ' '.join(arg)
-	await ctx.send('Теперь напишите текст заметки')
-	text = await bot.wait_for("message", check=check(ctx))
 	
-	base.child(author_id).update({title: text.content})
-	await ctx.send('Готово')
+	if arg[0] != '':
+		await ctx.send('Теперь напишите текст заметки')
+		text = await bot.wait_for("message", check=check(ctx))
+		
+		base.child(author_id).update({title: text.content})
+		await ctx.send('Готово')
+	else:
+		await ctx.send(embed = destext('Ошибка', 'Отсутствует заголовок'))
 
 @bot.command()
 async def remove(ctx: discord.Message, *arg):
