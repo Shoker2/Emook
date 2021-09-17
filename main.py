@@ -8,8 +8,9 @@ from discord.ext import commands
 Moder = False		#False - если нет модерации у заданий, True - если есть
 apiKey = 'AIzaSyBZ89phjIKS4ev_b_SOXx2kl5NMYPMc0R4'		#Для базы данных firebase
 databaseURL = 'https://botest-ec7b7-default-rtdb.firebaseio.com'
-Token = 'ODgyOTc1NzYwODQ2MDMyOTA2.YTDNQg.VHfLBo8CnOHsisIBoDPExnEuI7c' #Для бота
-game = 'помощника' #В статусе бота "Игрет в ..."
+Token = 'ODgyOTc1NzYwODQ2MDMyOTA2.YTDNQg.VHfLBo8CnOHsisIBoDPExnEuI7c'	#Для бота
+game = 'помощника'	#В статусе бота "Игрет в ..."
+prefix = '>'	#С чего начинаются команды у бота
 
 def new_quest(z):
 	plus = 0
@@ -66,7 +67,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 base = firebase.database()
 
-bot = commands.Bot(command_prefix='>')
+bot = commands.Bot(command_prefix=prefix)
 bot.remove_command('help')
 
 @bot.event
@@ -247,5 +248,53 @@ async def Гайд(ctx: discord.Message):
 			time.sleep(0.2)
 	else:
 		await ctx.send('Я работаю только в ЛС')
+
+@bot.command()
+async def add(ctx: discord.Message, *arg):
+	author_id = ctx.message.author.id
+	if (str(base.child(author_id).get().val())) == 'None':
+		base.child(author_id).update({'vbg092g49s87yА*(Р)ц': 'test'})
+	t = base.child(author_id).get()
+	
+	title = ' '.join(arg)
+	await ctx.send('Теперь напишите текст заметки')
+	text = await bot.wait_for("message", check=check(ctx))
+	
+	base.child(author_id).update({title: text.content})
+	await ctx.send('Готово')
+
+@bot.command()
+async def remove(ctx: discord.Message, *arg):
+	title = ' '.join(arg)
+	
+	author_id = ctx.message.author.id
+	text = str(base.child(str(author_id) + '/' + title).get().val())
+	if (text) == 'None':
+		await ctx.send(embed = destext('Ошибка', 'Такой заметки не найдено'))
+	else:
+		base.child(str(author_id) + '/' + title).remove()
+		await ctx.send('Готово')
+
+@bot.command()
+async def list(ctx):
+	author_id = ctx.message.author.id
+	if (str(base.child(author_id).get().val())) == 'None':
+		base.child(author_id).update({'vbg092g49s87yА*(Р)ц': 'test'})
+	t = base.child(author_id).get()
+	
+	for ind in t.each():
+		if str(ind.key()) != 'vbg092g49s87yА*(Р)ц': 
+			await ctx.send('"' + str(ind.key()) + '"')
+
+@bot.command()
+async def read(ctx, *arg):
+	title = ' '.join(arg)
+	
+	author_id = ctx.message.author.id
+	text = str(base.child(str(author_id) + '/' + title).get().val())
+	if (text) == 'None':
+		await ctx.send(embed = destext('Ошибка', 'Такой заметки не найдено'))
+	else:
+		await ctx.send(embed = destext(title, text))
 
 bot.run(Token)
