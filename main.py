@@ -238,16 +238,6 @@ async def read(ctx, *arg):
 	else:
 		await ctx.send('Эта команда работает только в ЛС ')
 
-@commands.has_permissions(administrator=True)
-@client.command(pass_context = True, aliases=['Clear'])
-async def clear(ctx, number):
-	mgs = [] #Empty list to put all the messages in the log
-	number = int(number) #Converting the amount of messages to delete to an 
-	#integer(number)
-	async for x in ctx.logs_from(ctx.message.channel, limit = number):
-		mgs.append(x)
-	await ctx.delete_messages(mgs)
-
 @bot.command()
 async def help(ctx):
 	await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Удалить <ID заказа> - Удалить заказ\n\n>Доска - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n\n>add <Заголовок> - Создать заметку\n>list - Просмотреть список заголовков заметок\n>read <Заголовок> - Просмотр заметки\n>remove <Заголовок> - Удалить заметку\n\n>help - Просмотр команд бота**'))
