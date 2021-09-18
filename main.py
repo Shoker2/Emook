@@ -239,9 +239,14 @@ async def read(ctx, *arg):
 		await ctx.send('Эта команда работает только в ЛС ')
 
 @commands.has_permissions(administrator=True)
-@bot.command(pass_context=True)
-async def purge(ctx, amount):
-	await bot.purge_from(ctx.message.channel, limit=amount)
+@client.command(pass_context = True, aliases=['Clear'])
+async def clear(ctx, number):
+	mgs = [] #Empty list to put all the messages in the log
+	number = int(number) #Converting the amount of messages to delete to an 
+	#integer(number)
+	async for x in ctx.logs_from(ctx.message.channel, limit = number):
+		mgs.append(x)
+	await ctx.delete_messages(mgs)
 
 @bot.command()
 async def help(ctx):
