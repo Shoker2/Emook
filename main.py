@@ -273,8 +273,11 @@ async def list(ctx):
 		
 		for ind in t.each():
 			if str(ind.key()) != 'vbg092g49s87yА*(Р)ц': 
-				list.append('"' + str(ind.key()) + '"')
-		text = '\n'.join(list)
+				list.append('**"' + str(ind.key()) + '"**')
+		if text != ''"
+			text = '\n'.join(list)
+		else:
+			text = '------ Пусто ------'
 		await ctx.send(embed=destext('Ваши записки', text))
 	else:
 		await ctx.send('Я работаю только в ЛС')
