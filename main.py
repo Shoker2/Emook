@@ -171,17 +171,20 @@ async def Доска(ctx, *arg):
 async def Удалить(ctx, code):
 	if ctx.guild is None and not ctx.author.bot:
 		quest = base.child("quests/" + code).get()
-		if str(quest.val())[-1] != '*':
-			embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
-		elif str(quest.val())[-1] == '*':
-			embed=discord.Embed(title='Задание', description=str(quest.val())[:-1], color=0xbd7800)
-		
-		embed.add_field(name='Чтобы удалить задание напишите "Удалить"', value='Для отмены напишите любое слово', inline=False)
-		await ctx.send(embed=embed)
-		delite = await bot.wait_for("message", check=check(ctx))
-		if delite.content == 'Удалить':
-			base.child("quests").child(code).remove()
-			await ctx.send('Задание ID - "' + code + '" было удалено')
+		if str(quest.val()) != 'None':
+			if str(quest.val())[-1] != '*':
+				embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
+			elif str(quest.val())[-1] == '*':
+				embed=discord.Embed(title='Задание', description=str(quest.val())[:-1], color=0xbd7800)
+			
+			embed.add_field(name='Чтобы удалить задание напишите "Удалить"', value='Для отмены напишите любое слово', inline=False)
+			await ctx.send(embed=embed)
+			delite = await bot.wait_for("message", check=check(ctx))
+			if delite.content == 'Удалить':
+				base.child("quests").child(code).remove()
+				await ctx.send('Задание ID - "' + code + '" было удалено')
+		else:
+			await ctx.send(embed=destext('Ошибка','Данного задания не существует'))
 	else:
 		await ctx.send('Я работаю только в ЛС')
 
