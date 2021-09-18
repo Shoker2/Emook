@@ -239,9 +239,9 @@ async def read(ctx, *arg):
 		await ctx.send('Эта команда работает только в ЛС ')
 
 @commands.has_permissions(administrator=True)
-@bot.command()
-async def clear(ctx, number: int):
-	await ctx.channel.purge(limit=number)
+@bot.command(pass_context=True)
+async def purge(ctx, amount):
+	await bot.purge_from(ctx.message.channel, limit=amount)
 
 @bot.command()
 async def help(ctx):
