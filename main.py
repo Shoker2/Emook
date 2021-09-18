@@ -28,11 +28,11 @@ def new_quest(z, id_server):
 	
 	text = z.splitlines()
 	if len(text) == 4:
-		z = 'Ник заказчика - "' + text[0] + '"\nНазвание заказа - "' + text[1] + '"\nВознаграждение - "' + text[2] + '"\nОписание - "' + text[3] + '"' #\n **Уже кто-то взял это задание**
+		z = 'Ник заказчика - "' + text[0] + '"\nНазвание заказа - "' + text[1] + '"\nВознаграждение - "' + text[2] + '"\nОписание - "' + text[3] + '"'
 		base.child(id_server + "/quests").update({ids: z})
 		return text[1], ids
 	if len(text) == 3:
-		z = 'Ник заказчика - "' + text[0] + '"\nНазвание заказа - "' + text[1] + '"\nОписание - "' + text[2] + '"' #\n **Уже кто-то взял это задание**
+		z = 'Ник заказчика - "' + text[0] + '"\nНазвание заказа - "' + text[1] + '"\nОписание - "' + text[2] + '"'
 		base.child(id_server + "/quests").update({ids: z})
 		return text[1], ids
 	else:
@@ -110,20 +110,20 @@ async def Принять(ctx, code):
 	quest = base.child(id_server + "/quests/" + code).get()
 	if str(quest.val()) != 'None':
 		if str(quest.val())[-1] != '*':
-			embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
-			embed.add_field(name='Чтобы взять задание напишите "Принять"', value='Для отмены напишите любое слово', inline=False)
+			embed=discord.Embed(title='Заказ', description=str(quest.val()), color=0xbd7800)
+			embed.add_field(name='Чтобы взять заказ напишите "Принять"', value='Для отмены напишите любое слово', inline=False)
 			await ctx.send(embed=embed)
 			yes = await bot.wait_for("message", check=check(ctx))
 			if yes.content == 'Принять':
 				UpdateQuest = str(quest.val()) + '\n*'
 				base.child(id_server + "/quests").update({code: UpdateQuest})
-				await ctx.send('Вы приняли задание')
+				await ctx.send('Вы приняли заказ')
 		else:
-			embed=discord.Embed(title='Задание', description=str(quest.val())[:-2], color=0xbd7800)
+			embed=discord.Embed(title='Заказ', description=str(quest.val())[:-2], color=0xbd7800)
 			await ctx.send(embed=embed)
-			await ctx.send('**Вы не можете взять это задание, так как кто-то уже принял данное задание**')
+			await ctx.send('**Вы не можете взять этот заказ, так как кто-то уже принял его**')
 	else:
-		await ctx.send(embed=destext('Ошибка','Данного задания не существует'))
+		await ctx.send(embed=destext('Ошибка','Данного заказа не существует'))
 
 @bot.command()
 async def Доска(ctx, *arg):
@@ -156,18 +156,18 @@ async def Удалить(ctx, code):
 	quest = base.child(id_server + "/quests/" + code).get()
 	if str(quest.val()) != 'None':
 		if str(quest.val())[-1] != '*':
-			embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
+			embed=discord.Embed(title='Заказ', description=str(quest.val()), color=0xbd7800)
 		elif str(quest.val())[-1] == '*':
-			embed=discord.Embed(title='Задание', description=str(quest.val())[:-1], color=0xbd7800)
+			embed=discord.Embed(title='Заказ', description=str(quest.val())[:-1], color=0xbd7800)
 			
-		embed.add_field(name='Чтобы удалить задание напишите "Удалить"', value='Для отмены напишите любое слово', inline=False)
+		embed.add_field(name='Чтобы удалить заказ напишите "Удалить"', value='Для отмены напишите любое слово', inline=False)
 		await ctx.send(embed=embed)
 		delite = await bot.wait_for("message", check=check(ctx))
 		if delite.content == 'Удалить':
 			base.child(id_server + "/quests").child(code).remove()
-			await ctx.send('Задание ID - "' + code + '" было удалено')
+			await ctx.send('Заказ ID - "' + code + '" было удалено')
 	else:
-		await ctx.send(embed=destext('Ошибка','Данного задания не существует'))
+		await ctx.send(embed=destext('Ошибка','Данного заказа не существует'))
 
 @bot.command()
 async def add(ctx, *arg):
