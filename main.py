@@ -267,12 +267,15 @@ async def list(ctx):
 		if (str(base.child(author_id).get().val())) == 'None':
 			base.child(author_id).update({'vbg092g49s87yА*(Р)ц': 'test'})
 		t = base.child(author_id).get()
+		list = []
 		
 		await ctx.send('Ваши заметки:\n')
 		
 		for ind in t.each():
 			if str(ind.key()) != 'vbg092g49s87yА*(Р)ц': 
-				await ctx.send('"' + str(ind.key()) + '"')
+				list.append('"' + str(ind.key()) + '"')
+		text = '\n'.join(list)
+		await ctx.send(embed=destext('Ваши записки', text))
 	else:
 		await ctx.send('Я работаю только в ЛС')
 
