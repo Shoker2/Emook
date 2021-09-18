@@ -2,7 +2,6 @@ import discord
 import pyrebase
 import random
 import string
-import time
 from discord.ext import commands
 
 Moder = False		#False - если нет модерации у заданий, True - если есть
@@ -44,7 +43,6 @@ def grs(y):
 	return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
 def GuideUrl(title, text, url):
-	time.sleep(0.2)
 	embed = discord.Embed(title=title, description=text, color=0xbd7800)
 	embed.set_image(url=url)
 	return embed
