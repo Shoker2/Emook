@@ -217,7 +217,6 @@ async def Гайд(ctx):
 			await ctx.send(embed=GuideUrl('Получение залания ч.4','Напиши мне команду ">Принять <ID задания>"','https://i.ibb.co/yS5dC4G/Discord-CVcu7h3rrl.png'))
 			await ctx.send(embed=GuideUrl('Получение залания ч.5','Если задание ещё не кто не взял, то в ответ вы бот напишет - "Вы приняли задание"','https://i.ibb.co/jgdRgXB/Discord-G7i-I5-YYMp1.png'))
 			await ctx.send(embed=GuideUrl('Завершение задания','Если вы выполнили задание и получили награду, то задание нужно удалить.\nВы можете договориться, кто удалит задание.\nНапишите мне ">Удалить <ID заказа>" для удаления задания.','https://i.ibb.co/5jHLYcN/Discord-s-Tf-TQd-Aj3-Z.png'))
-			
 	else:
 		await ctx.send('Я работаю только в ЛС')
 
