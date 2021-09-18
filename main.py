@@ -89,19 +89,15 @@ async def on_command_error(ctx, error):
 async def Заказ(ctx):
 	if ctx.guild is None and not ctx.author.bot:
 		await ctx.send(embed = destext('Как оформить заказ', '**1. Ваш ник\n2. Название заказа\n3. Вознаграждение\n4. Описание (Возможное уточнее заказа, Адресс доставки и т.д.)**\n\nЗаказ вводится одним сообщением. В случае неправильного написания бот отменит заказ\nНужно обязательно заполнить все поля'))
-		time.sleep(0.01)
 		nord = 0
 		while nord == 0:
-			time.sleep(0.01)
 			await ctx.send('Введите свой заказ')
 			NewOrder = await bot.wait_for("message", check=check(ctx))
-			time.sleep(0.01)
 			embed=discord.Embed(title="Подтверждение", color=0xbd7800)
 			embed.add_field(name='Если введёные данные верны напишите "Готово"', value='Если же вы ошиблись, то напишите "Повтор"', inline=False)
 			embed.set_footer(text="Для отмены напишите любое слово")
 			await ctx.send(embed=embed)
 			Done = await bot.wait_for("message", check=check(ctx))
-			time.sleep(0.01)
 			if Done.content == 'Готово':
 				Zag, code = new_quest(NewOrder.content)
 				if Zag != 'error':
