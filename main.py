@@ -76,94 +76,106 @@ async def on_command_error(ctx, error):
 
 @bot.command()
 async def Заказ(ctx):
-	id_server = str(ctx.guild.id)
-	await ctx.send(embed = destext('Как оформить заказ', '**1. Ваш ник\n2. Название заказа\n3. Вознаграждение\n4. Описание (Возможное уточнее заказа, Адресс доставки и т.д.)**\n\nЗаказ вводится одним сообщением. В случае неправильного написания бот отменит заказ\nНужно обязательно заполнить все поля'))
-	nord = 0
-	while nord == 0:
-		await ctx.send('Введите свой заказ')
-		NewOrder = await bot.wait_for("message", check=check(ctx))
-		embed=discord.Embed(title="Подтверждение", color=0xbd7800)
-		embed.add_field(name='Если введёные данные верны напишите "Готово"', value='Если же вы ошиблись, то напишите "Повтор"', inline=False)
-		embed.set_footer(text="Для отмены напишите любое слово")
-		await ctx.send(embed=embed)
-		Done = await bot.wait_for("message", check=check(ctx))
-		if Done.content == 'Готово':
-			Zag, code = new_quest(NewOrder.content, id_server)
-			if Zag != 'error':
-				nord = 1
-				await ctx.send('Готово!\nID вашего заказа - "' + code + '"')
+	if ctx.guild is None and ctx.author.bot:
+		id_server = str(ctx.guild.id)
+		await ctx.send(embed = destext('Как оформить заказ', '**1. Ваш ник\n2. Название заказа\n3. Вознаграждение\n4. Описание (Возможное уточнее заказа, Адресс доставки и т.д.)**\n\nЗаказ вводится одним сообщением. В случае неправильного написания бот отменит заказ\nНужно обязательно заполнить все поля'))
+		nord = 0
+		while nord == 0:
+			await ctx.send('Введите свой заказ')
+			NewOrder = await bot.wait_for("message", check=check(ctx))
+			embed=discord.Embed(title="Подтверждение", color=0xbd7800)
+			embed.add_field(name='Если введёные данные верны напишите "Готово"', value='Если же вы ошиблись, то напишите "Повтор"', inline=False)
+			embed.set_footer(text="Для отмены напишите любое слово")
+			await ctx.send(embed=embed)
+			Done = await bot.wait_for("message", check=check(ctx))
+			if Done.content == 'Готово':
+				Zag, code = new_quest(NewOrder.content, id_server)
+				if Zag != 'error':
+					nord = 1
+					await ctx.send('Готово!\nID вашего заказа - "' + code + '"')
+				else:
+					await ctx.send(embed=destext('Ошибка','Неверный ввод даных'))
+					nord = 1
+			elif Done.content == 'Повтор':
+				continue
 			else:
-				await ctx.send(embed=destext('Ошибка','Неверный ввод даных'))
 				nord = 1
-		elif Done.content == 'Повтор':
-			continue
-		else:
-			nord = 1
+	else:
+		await ctx.send('Эта команда работает только на сервере ')
 
 @bot.command()
 async def Принять(ctx, code):
-	id_server = str(ctx.guild.id)
-	quest = base.child(id_server + "/quests/" + code).get()
-	if str(quest.val()) != 'None':
-		if str(quest.val())[-1] != '*':
-			embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
-			embed.add_field(name='Чтобы взять задание напишите "Принять"', value='Для отмены напишите любое слово', inline=False)
-			await ctx.send(embed=embed)
-			yes = await bot.wait_for("message", check=check(ctx))
-			if yes.content == 'Принять':
-				UpdateQuest = str(quest.val()) + '\n*'
-				base.child(id_server + "/quests").update({code: UpdateQuest})
-				await ctx.send('Вы приняли задание')
+	if ctx.guild is None and ctx.author.bot:
+		id_server = str(ctx.guild.id)
+		quest = base.child(id_server + "/quests/" + code).get()
+		if str(quest.val()) != 'None':
+			if str(quest.val())[-1] != '*':
+				embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
+				embed.add_field(name='Чтобы взять задание напишите "Принять"', value='Для отмены напишите любое слово', inline=False)
+				await ctx.send(embed=embed)
+				yes = await bot.wait_for("message", check=check(ctx))
+				if yes.content == 'Принять':
+					UpdateQuest = str(quest.val()) + '\n*'
+					base.child(id_server + "/quests").update({code: UpdateQuest})
+					await ctx.send('Вы приняли задание')
+			else:
+				embed=discord.Embed(title='Задание', description=str(quest.val())[:-2], color=0xbd7800)
+				await ctx.send(embed=embed)
+				await ctx.send('**Вы не можете взять это задание, так как кто-то уже принял данное задание**')
 		else:
-			embed=discord.Embed(title='Задание', description=str(quest.val())[:-2], color=0xbd7800)
-			await ctx.send(embed=embed)
-			await ctx.send('**Вы не можете взять это задание, так как кто-то уже принял данное задание**')
+			await ctx.send(embed=destext('Ошибка','Данного задания не существует'))
 	else:
-		await ctx.send(embed=destext('Ошибка','Данного задания не существует'))
+		await ctx.send('Эта команда работает только на сервере ')
 
 @bot.command()
 async def Доска(ctx, *arg):
-	id_server = str(ctx.guild.id)
-	if len(arg) == 0:
-		t = base.child(id_server + "/quests").get()
-		for user in t.each():
-			if str(user.key()) != 'test' and str(user.val())[-1] !='*':
-				await ctx.send(embed=destext('ID - "' + str(user.key()) + '"', '**' + str(user.val()) + '**' ))
-	elif arg[0] == 'с':
-		t = base.child(id_server + "/quests").get()
-		s = []
-		for user in t.each():
-			if str(user.key()) != 'test' and str(user.val())[-1] !='*':
-				s.append([str(user.key()),str(user.val())])
-		rand = random.randint(0, len(s)-1)
-		await ctx.send(embed=destext('ID - "' + s[rand][0] + '"', '**' + s[rand][1] + '**' ))
-	elif len(arg) == 2 and int(arg[0]) == int(arg[0]) and int(arg[1]) == int(arg[1]):
-		t = base.child(id_server + "/quests").get()
-		ints = 0
-		for user in t.each():
-			if str(user.key()) != 'test' and str(user.val())[-1] !='*':
-				ints += 1
-				if ints > int(arg[0])-1 and ints < int(arg[1])+1:
+	if ctx.guild is None and ctx.author.bot:
+		id_server = str(ctx.guild.id)
+		if len(arg) == 0:
+			t = base.child(id_server + "/quests").get()
+			for user in t.each():
+				if str(user.key()) != 'test' and str(user.val())[-1] !='*':
 					await ctx.send(embed=destext('ID - "' + str(user.key()) + '"', '**' + str(user.val()) + '**' ))
+		elif arg[0] == 'с':
+			t = base.child(id_server + "/quests").get()
+			s = []
+			for user in t.each():
+				if str(user.key()) != 'test' and str(user.val())[-1] !='*':
+					s.append([str(user.key()),str(user.val())])
+			rand = random.randint(0, len(s)-1)
+			await ctx.send(embed=destext('ID - "' + s[rand][0] + '"', '**' + s[rand][1] + '**' ))
+		elif len(arg) == 2 and int(arg[0]) == int(arg[0]) and int(arg[1]) == int(arg[1]):
+			t = base.child(id_server + "/quests").get()
+			ints = 0
+			for user in t.each():
+				if str(user.key()) != 'test' and str(user.val())[-1] !='*':
+					ints += 1
+					if ints > int(arg[0])-1 and ints < int(arg[1])+1:
+						await ctx.send(embed=destext('ID - "' + str(user.key()) + '"', '**' + str(user.val()) + '**' ))
+	else:
+		await ctx.send('Эта команда работает только на сервере ')
 
 @bot.command()
 async def Удалить(ctx, code):
-	id_server = str(ctx.guild.id)
-	quest = base.child(id_server + "/quests/" + code).get()
-	if str(quest.val()) != 'None':
-		if str(quest.val())[-1] != '*':
-			embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
-		elif str(quest.val())[-1] == '*':
-			embed=discord.Embed(title='Задание', description=str(quest.val())[:-1], color=0xbd7800)
-			
-		embed.add_field(name='Чтобы удалить задание напишите "Удалить"', value='Для отмены напишите любое слово', inline=False)
-		await ctx.send(embed=embed)
-		delite = await bot.wait_for("message", check=check(ctx))
-		if delite.content == 'Удалить':
-			base.child(id_server + "/quests").child(code).remove()
-			await ctx.send('Задание ID - "' + code + '" было удалено')
+	if ctx.guild is None and ctx.author.bot:
+		id_server = str(ctx.guild.id)
+		quest = base.child(id_server + "/quests/" + code).get()
+		if str(quest.val()) != 'None':
+			if str(quest.val())[-1] != '*':
+				embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
+			elif str(quest.val())[-1] == '*':
+				embed=discord.Embed(title='Задание', description=str(quest.val())[:-1], color=0xbd7800)
+				
+			embed.add_field(name='Чтобы удалить задание напишите "Удалить"', value='Для отмены напишите любое слово', inline=False)
+			await ctx.send(embed=embed)
+			delite = await bot.wait_for("message", check=check(ctx))
+			if delite.content == 'Удалить':
+				base.child(id_server + "/quests").child(code).remove()
+				await ctx.send('Задание ID - "' + code + '" было удалено')
+		else:
+			await ctx.send(embed=destext('Ошибка','Данного задания не существует'))
 	else:
-		await ctx.send(embed=destext('Ошибка','Данного задания не существует'))
+		await ctx.send('Эта команда работает только на сервере ')
 
 @bot.command()
 async def add(ctx, *arg):
