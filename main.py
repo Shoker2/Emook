@@ -116,24 +116,27 @@ async def Заказ(ctx):
 				nord = 1
 	else:
 		await ctx.send('Я работаю только в ЛС')
-	
+
 @bot.command()
 async def Принять(ctx, code):
 	if ctx.guild is None and not ctx.author.bot:
 		quest = base.child("quests/" + code).get()
-		if str(quest.val())[-1] != '*':
-			embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
-			embed.add_field(name='Чтобы взять задание напишите "Принять"', value='Для отмены напишите любое слово', inline=False)
-			await ctx.send(embed=embed)
-			yes = await bot.wait_for("message", check=check(ctx))
-			if yes.content == 'Принять':
-				UpdateQuest = str(quest.val()) + '\n*'
-				base.child("quests").update({code: UpdateQuest})
-				await ctx.send('Вы приняли задание')
+		if str(quest.val()) != 'None':
+			if str(quest.val())[-1] != '*':
+				embed=discord.Embed(title='Задание', description=str(quest.val()), color=0xbd7800)
+				embed.add_field(name='Чтобы взять задание напишите "Принять"', value='Для отмены напишите любое слово', inline=False)
+				await ctx.send(embed=embed)
+				yes = await bot.wait_for("message", check=check(ctx))
+				if yes.content == 'Принять':
+					UpdateQuest = str(quest.val()) + '\n*'
+					base.child("quests").update({code: UpdateQuest})
+					await ctx.send('Вы приняли задание')
+			else:
+				embed=discord.Embed(title='Задание', description=str(quest.val())[:-2], color=0xbd7800)
+				await ctx.send(embed=embed)
+				await ctx.send('**Вы не можете взять это задание, так как кто-то уже принял данное задание**')
 		else:
-			embed=discord.Embed(title='Задание', description=str(quest.val())[:-2], color=0xbd7800)
-			await ctx.send(embed=embed)
-			await ctx.send('**Вы не можете взять это задание, так как кто-то уже принял данное задание**')
+			await ctx.send(embed=destext('Ошибка','Данного задания не существует'))
 	else:
 		await ctx.send('Я работаю только в ЛС')
 
