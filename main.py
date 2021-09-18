@@ -239,15 +239,6 @@ async def read(ctx, *arg):
 		await ctx.send('Эта команда работает только в ЛС ')
 
 @bot.command()
-async def clear(ctx, amount=100):
-	user = ctx.author
-	if user.permissions_in(ctx.message.channel).administrator:
-		await ctx.channel.purge(limit=amount)
-		await ctx.channel.send('Сообщения успешно удалены')
-	else:
-		await ctx.send('У вас недостаточно прав для выполнения данной команды')
-
-@bot.command()
 async def help(ctx):
 	await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Удалить <ID заказа> - Удалить заказ\n\n>Доска - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n\n>add <Заголовок> - Создать заметку\n>list - Просмотреть список заголовков заметок\n>read <Заголовок> - Просмотр заметки\n>remove <Заголовок> - Удалить заметку\n\n>help - Просмотр команд бота**'))
 
