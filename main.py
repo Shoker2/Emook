@@ -241,7 +241,7 @@ async def read(ctx, *arg):
 @commands.has_permissions(administrator=True)
 @bot.command()
 async def clear(ctx, number: int):
-  await ctx.channel.purge(limit=number)
+	await ctx.channel.purge(limit=number)
 
 @bot.command()
 async def help(ctx):
