@@ -7,7 +7,7 @@ from discord.ext import commands
 apiKey = 'AIzaSyBZ89phjIKS4ev_b_SOXx2kl5NMYPMc0R4'		#Для базы данных firebase
 databaseURL = 'https://botest-ec7b7-default-rtdb.firebaseio.com'
 Token = 'ODgzNzAwOTk4NTcxNDUwMzY4.YTNwsA.k8I_fRs5AQeBNMGq2rroKRaEzd0'	#Для бота
-game = 'бота'	#В статусе бота "Игрет в ..."
+game = '"Притворись ботом"'	#В статусе бота "Игрет в ..."
 prefix = '>'	#С чего начинаются команды у бота
 
 def new_quest(z, id_server):
