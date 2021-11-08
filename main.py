@@ -241,7 +241,7 @@ async def read(ctx, *arg):
 @bot.command()
 async def code(ctx, arg):
 	num = int(arg)
-	if num < 10000:
+	if num < 100:
 		code = []
 		for i in range(num):
 			code.append('https://discord.com/gifts/' + str(grs(random.randint(12, 24))))
