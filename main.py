@@ -72,12 +72,12 @@ bot.remove_command('help')
 async def on_ready():
 	print('Мы вошли как {0.user}'.format(bot))
 	await bot.change_presence(activity=discord.Game(name=game))
-
+'''
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound ):
         await ctx.send(embed = discord.Embed(title = 'Данной команды не существует', description = 'Чтобы узнать доступные команды напишите ">help"', color=0xbd7800))
-
+'''
 @bot.command()
 async def Заказ(ctx):
 	id_server = str(ctx.guild.id)
@@ -245,7 +245,7 @@ async def code(ctx, arg):
 	for i in range(num):
 		code.append('https://discord.com/gifts/' + str(grs(random.randint(12, 24))))
 	text = '\n'.join(code)
-	ctx.send(text)
+	await ctx.send(text)
 
 @bot.command()
 async def help(ctx):
