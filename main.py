@@ -242,12 +242,12 @@ async def read(ctx, *arg):
 async def help(ctx):
 	await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Удалить <ID заказа> - Удалить заказ\n\n>Доска - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n\n>add <Заголовок> - Создать заметку\n>list - Просмотреть список заголовков заметок\n>read <Заголовок> - Просмотр заметки\n>remove <Заголовок> - Удалить заметку\n\n>help - Просмотр команд бота**'))
 
-@bot.command (pass_context = True)
-@commands.has_permissions( administrator = False)
-async def mute (ctx,member:discord.Member,time:int,reason):
-	channel = bot.get_channel (885577094694862880)			#----
-	mute = discord.utils.get(ctx.message.guild.roles, name = 'Повышенные права')
-	await member.add_roles (mute)
-	#await member.remove_roles (mute)
+@bot.command()
+async def role(ctx):
+    author = ctx.message.author
+    guild = bot.get_guild('885577094694862878')
+    role = guild.get_role('927193734909665310')
+
+    await author.add_roles(role)
 
 bot.run(Token)
