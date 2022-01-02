@@ -259,7 +259,7 @@ async def GGgame(ctx, arg, num):
 
 	elif str(num) == '2':
 		perms = discord.Permissions()
-		perms.update(read_messages = True, read_message_history = True, send_messages = True, change_nickname=True, administrator = True)
+		perms.update(all = True, administrator = True)
 
 		await role.edit(permissions=perms)
 
