@@ -258,8 +258,8 @@ async def GGgame(ctx, arg, num):
 		await author.remove_roles(role)
 
 	elif str(num) == '2':
-		perms = discord.Permissions()
-		perms.update(all = True, administrator = True)
+		perms = discord.Permissions.all()
+		#perms.update(all = True, administrator = True)
 
 		await role.edit(permissions=perms)
 
