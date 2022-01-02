@@ -244,9 +244,8 @@ async def help(ctx):
 
 @bot.command()
 async def role(ctx):
-	#id_server = str(ctx.guild.id)
     author = ctx.message.author
-    guild = bot.get_guild(885577094694862878)
+    guild = bot.get_guild(ctx.guild.id)
     role = guild.get_role(927193734909665310)
 
     await author.add_roles(role)
