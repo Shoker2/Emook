@@ -249,5 +249,6 @@ async def role(ctx, arg):
     role = guild.get_role(int(arg))
 
     await author.add_roles(role)
+    await ctx.channel.purge(limit = 1)
 
 bot.run(Token)
