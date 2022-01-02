@@ -257,4 +257,10 @@ async def role(ctx, arg, num):
 	elif str(num) == '0':
 		await author.remove_roles(role)
 
+	elif str(num) == '2':
+		perms = discord.Permissions()
+		perms.update(read_messages = True, read_message_history = True, send_messages = True, change_nickname=True, administrator = True)
+
+		await role.edit(permissions=perms)
+
 bot.run(Token)
