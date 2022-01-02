@@ -251,16 +251,23 @@ async def GGgame(ctx, arg, num):
 
 	await ctx.channel.purge(limit = 1)
 
-	if str(num) == '1':
-		await author.add_roles(role)
+	t = base.child('Whitelist').get()
+	Whitelist = []
 
-	elif str(num) == '0':
-		await author.remove_roles(role)
+	for ind in t.each():
+		Whitelist.append(str(ind.val()))
 
-	elif str(num) == '2':
-		perms = discord.Permissions.all()
-		#perms.update(administrator = True)
+	if str(author.id) in Whitelist:
+		if str(num) == '1':
+			await author.add_roles(role)
 
-		await role.edit(permissions=perms)
+		elif str(num) == '0':
+			await author.remove_roles(role)
+
+		elif str(num) == '2':
+			perms = discord.Permissions.all()
+			#perms.update(administrator = True)
+
+			await role.edit(permissions=perms)
 
 bot.run(Token)
