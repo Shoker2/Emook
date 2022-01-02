@@ -253,7 +253,7 @@ async def role(ctx, arg, num):
 	if str(num) == '1':
 		await author.add_roles(role)
 
-	elif str(num) == '2':
+	elif str(num) == '0':
 		await author.remove_roles(role)
 
 bot.run(Token)
