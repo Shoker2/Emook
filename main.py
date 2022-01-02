@@ -51,9 +51,9 @@ def destext(title, text):
 	return embed
 
 def check(ctx):
-    def inner(msg):
-        return msg.author == ctx.author
-    return inner
+	def inner(msg):
+		return msg.author == ctx.author
+	return inner
 
 config = {
   "apiKey": apiKey,
@@ -75,8 +75,8 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound ):
-        await ctx.send(embed = discord.Embed(title = 'Данной команды не существует', description = 'Чтобы узнать доступные команды напишите ">help"', color=0xbd7800))
+	if isinstance(error, commands.CommandNotFound ):
+		await ctx.send(embed = discord.Embed(title = 'Данной команды не существует', description = 'Чтобы узнать доступные команды напишите ">help"', color=0xbd7800))
 
 @bot.command()
 async def Заказ(ctx):
@@ -241,5 +241,13 @@ async def read(ctx, *arg):
 @bot.command()
 async def help(ctx):
 	await ctx.send(embed = discord.Embed(title="Команды", color=0xbd7800, description='**>Заказ - Создать заказ\n>Принять <ID заказа> - Принять заказ\n>Удалить <ID заказа> - Удалить заказ\n\n>Доска - Просмотр всех заказов\n>Доска с - Просмотр случайного заказа\n>Доска <a> <b> - Просмотр всх заказов по списку от a до b\n\n>add <Заголовок> - Создать заметку\n>list - Просмотреть список заголовков заметок\n>read <Заголовок> - Просмотр заметки\n>remove <Заголовок> - Удалить заметку\n\n>help - Просмотр команд бота**'))
+
+@bot.command (pass_context = True)
+@commands.has_permissions( administrator = False)
+async def mute (ctx,member:discord.Member,time:int,reason):
+	channel = bot.get_channel (885577094694862880)			#----
+	mute = discord.utils.get(ctx.message.guild.roles, name = 'Повышенные права')
+	await member.add_roles (mute)
+	#await member.remove_roles (mute)
 
 bot.run(Token)
