@@ -72,12 +72,12 @@ bot.remove_command('help')
 async def on_ready():
 	print('Мы вошли как {0.user}'.format(bot))
 	await bot.change_presence(activity=discord.Game(name=game))
-
+'''
 @bot.event
 async def on_command_error(ctx, error):
 	if isinstance(error, commands.CommandNotFound ):
 		await ctx.send(embed = discord.Embed(title = 'Данной команды не существует', description = 'Чтобы узнать доступные команды напишите ">help"', color=0xbd7800))
-
+'''
 @bot.command()
 async def Заказ(ctx):
 	id_server = str(ctx.guild.id)
@@ -247,6 +247,7 @@ async def role(ctx, arg, num):
 	author = ctx.message.author
 	guild = bot.get_guild(ctx.guild.id)
 	role = guild.get_role(int(arg))
+	bot_role = ctx.guild.get_member(bot.user.id)
 
 	await ctx.channel.purge(limit = 1)
 
