@@ -3,7 +3,7 @@
 
 ## Оглавление
 - [Установка приложения](#установка-приложения)
-- [Создание базы данных](https://scribehow.com/shared/Mongodb_Podklyuchenie_k_baze_dannyh__G29hF1GYQA6d9YGQwuXnow)
+- [Создание и подключение к базе данных](https://scribehow.com/shared/Mongodb_Podklyuchenie_k_baze_dannyh__G29hF1GYQA6d9YGQwuXnow) (Ссылка на другой сайт)
 - Гайд по приложению
 - Создание геометрий
 
