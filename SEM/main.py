@@ -414,7 +414,10 @@ class Fond(Ui_Fond):
 		exlPoint = []
 		exlDesc = []
 
-		nameid = collection.find()
+		if select == 'Все':
+			nameid = collection.find()
+		else:
+			nameid = collection.find({'select': select, 'subselect': subselect})
 		for b in nameid:
 			exlName.append(b['Name'])
 			exlFond.append(b['fonds'])
