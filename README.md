@@ -42,12 +42,16 @@
 
 ![image](https://user-images.githubusercontent.com/66993983/151669830-2613e1ef-2528-443d-8355-51b847a7269d.png)
 
-Далее нужно просто ввести название для базы данных (Оно будет отображаться в вашем списке с базами данных)
+Далее нужно просто ввести название для базы данных (Оно будет отображаться в вашем списке с базами данных в нижнем регистре)
 
 ![image](https://user-images.githubusercontent.com/66993983/151669875-7b12f1be-9b66-48dd-b7a7-8d23c21293df.png)
 
 После этого нужно нажать кнопку "Добавить".
 
 ![image](https://user-images.githubusercontent.com/66993983/151669924-56fa130e-6248-4317-a125-b82d208c3571.png)
+
+Готово! Вы добавили базу данных в свой список.
+
+![image](https://user-images.githubusercontent.com/66993983/151670040-f923b57b-f4f6-49de-b55f-ba048766b0ea.png)
 
 [:arrow_up: В начало](#sem---shoker-electronic-museum)
