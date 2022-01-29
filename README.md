@@ -25,10 +25,10 @@
 
 Готово! Вы установили приложение.
 
-[:arrow_up:Оглавление](#оглавление)
+[:arrow_up: В начало](#sem---shoker-electronic-museum)
 
 ## Создание базы данных
 
 
 
-[:arrow_up:Оглавление](#sem---shoker-electronic-museum)
+[:arrow_up: В начало](#sem---shoker-electronic-museum)
