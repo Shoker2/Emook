@@ -1,6 +1,0 @@
-discord.py
-aiohttp
-websockets
-chardet
-Pyrebase
-random2
