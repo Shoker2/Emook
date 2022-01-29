@@ -1,13 +1,28 @@
 # SEM - Shoker Electronic Museum
 Программа, предназначенная для учёта музейных экспонатов.
+[Оглавление](#table-of-contents)
 
 ## Оглавление
 - Установка приложения
 - Создание базы данных
-- Инструкция
-- Геометрий
+- Гайд по приложению
+- Создание геометрий
 
-<iframe src="https://scribehow.com/embed/Mongodb_Podklyuchenie_k_baze_dannyh__G29hF1GYQA6d9YGQwuXnow" width="640" height="640" allowfullscreen frameborder="0"></iframe>
 
-##### Table of Contents  
-[Оглавление](#table-of-contents)
+## Установка приложения
+
+Место установки лучше выбрать не в системной папке, например просто на диск "C" или любой другой. После этого нажмите "Далее".
+
+![image](https://user-images.githubusercontent.com/66993983/151669045-34952170-be6f-49bb-a6c6-611a549d503f.png)
+
+Поставьте галочку на "Создать ярлык на рабочем столе" и нажмите "Далее", после чего нажмите "Установить"
+
+![фцв](https://user-images.githubusercontent.com/66993983/151669097-8db06bea-da33-4389-b963-36ec80731020.png)
+
+Когда закончится установка нажмите "Завершить"
+
+![image](https://user-images.githubusercontent.com/66993983/151669329-e814895c-4f87-4073-8236-d258bef261be.png)
+
+Готово! Вы установили приложение.
+
+## Создание базы данных
