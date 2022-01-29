@@ -31,4 +31,4 @@
 
 
 
-[:arrow_up:Оглавление](#оглавление)
+[:arrow_up:Оглавление](#sem---shoker-electronic-museum)
