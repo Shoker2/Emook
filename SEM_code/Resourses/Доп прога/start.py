@@ -1,6 +1,9 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5 import uic
+import configparser
+
+styleSheets = configparser.ConfigParser()
 
 NullFile = 0
 
@@ -44,6 +47,27 @@ class Main(QWidget):
 
 			gMain.append(str(self.Title.font().pointSize()))
 			gMain.append(str(self.labelSelection.font().pointSize()))
+
+			global styleSheets
+			styleSheets['Main'] = {
+			'Title': self.Title.styleSheet(),
+			'labelSelection': self.labelSelection.styleSheet(),
+			'allButton': self.allButton.styleSheet(),
+			'addButton': self.addButton.styleSheet(),
+			'exitButton': self.exitButton.styleSheet(),
+			'pushButton_1': self.pushButton_1.styleSheet(),
+			'pushButton_2': self.pushButton_2.styleSheet(),
+			'pushButton_3': self.pushButton_3.styleSheet(),
+			'pushButton_4': self.pushButton_4.styleSheet(),
+			'pushButton_5': self.pushButton_5.styleSheet(),
+			'pushButton_6': self.pushButton_6.styleSheet(),
+			'pushButton_7': self.pushButton_7.styleSheet(),
+			'pushButton_8': self.pushButton_8.styleSheet(),
+			'settingsButton': self.settingsButton.styleSheet()
+			}
+			global WSL
+			WSL = []
+			WSL.append(self.styleSheet())
 		except:
 			global NullFile
 			NullFile = 1
@@ -75,6 +99,22 @@ class Fond(QWidget):
 			gFont.append(str(self.listWidget.font().pointSize()))
 			gFont.append(str(self.comboBoxSearch.font().pointSize()))
 			gFont.append(str(self.comboBoxSearch_2.font().pointSize()))
+
+
+			styleSheets['Fond'] = {
+			'Title': self.Title.styleSheet(),
+			'listWidget': self.listWidget.styleSheet(),
+			'comboBoxSearch': self.comboBoxSearch.styleSheet(),
+			'labelSearch': self.labelSearch.styleSheet(),
+			'backButton': self.backButton.styleSheet(),
+			'labelSearch_2': self.labelSearch_2.styleSheet(),
+			'comboBoxSearch_2': self.comboBoxSearch_2.styleSheet(),
+			'refreshButton': self.refreshButton.styleSheet(),
+			'exporthButton': self.exporthButton.styleSheet(),
+			'importButton': self.importButton.styleSheet()
+			}
+
+			WSL.append(self.styleSheet())
 		except:
 			global NullFile
 			NullFile = 1
@@ -114,6 +154,24 @@ class addForm(QWidget):
 			gaddForm.append(str(self.labelName.font().pointSize()))
 			gaddForm.append(str(self.labelNumber.font().pointSize()))
 			gaddForm.append(str(self.lineEditNumber.font().pointSize()))
+
+			styleSheets['addForm'] = {
+			'Title': self.Title.styleSheet(),
+			'labelSelection': self.labelSelection.styleSheet(),
+			'Section': self.Section.styleSheet(),
+			'labelSubselection': self.labelSubselection.styleSheet(),
+			'Subselection': self.Subselection.styleSheet(),
+			'radioButtonFond_1': self.radioButtonFond_1.styleSheet(),
+			'radioButtonFond_2': self.radioButtonFond_2.styleSheet(),
+			'nextButton': self.nextButton.styleSheet(),
+			'backButton': self.backButton.styleSheet(),
+			'lineEditName': self.lineEditName.styleSheet(),
+			'labelName': self.labelName.styleSheet(),
+			'labelNumber': self.labelNumber.styleSheet(),
+			'lineEditNumber': self.lineEditNumber.styleSheet(),
+			}
+
+			WSL.append(self.styleSheet())
 		except:
 			global NullFile
 			NullFile = 1
@@ -145,6 +203,20 @@ class addFormPartTwo(QWidget):
 			gAFT.append(str(self.textEditDescription.font().pointSize()))
 			gAFT.append(str(self.labelPoint.font().pointSize()))
 			gAFT.append(str(self.lineEditPoint.font().pointSize()))
+
+			styleSheets['addFormPartTwo'] = {
+			'Title': self.Title.styleSheet(),
+			'labelGifter': self.labelGifter.styleSheet(),
+			'lineEditGifter': self.lineEditGifter.styleSheet(),
+			'labelDescription': self.labelDescription.styleSheet(),
+			'textEditDescription': self.textEditDescription.styleSheet(),
+			'labelPoint': self.labelPoint.styleSheet(),
+			'lineEditPoint': self.lineEditPoint.styleSheet(),
+			'saveButton': self.saveButton.styleSheet(),
+			'backButton': self.backButton.styleSheet()
+			}
+
+			WSL.append(self.styleSheet())
 		except:
 			global NullFile
 			NullFile = 1
@@ -169,6 +241,18 @@ class UiSubselection(QWidget):
 
 			gSS.append(str(self.Title.font().pointSize()))
 			gSS.append(str(self.labelSubselection.font().pointSize()))
+
+			styleSheets['UiSubselection'] = {
+			'Title': self.Title.styleSheet(),
+			'labelSubselection': self.labelSubselection.styleSheet(),
+			'backButton': self.backButton.styleSheet(),
+			'pushButton_1': self.pushButton_1.styleSheet(),
+			'pushButton_2': self.pushButton_2.styleSheet(),
+			'pushButton_3': self.pushButton_3.styleSheet(),
+			'pushButton_4': self.pushButton_4.styleSheet()
+			}
+
+			WSL.append(self.styleSheet())
 		except:
 			global NullFile
 			NullFile = 1
@@ -215,6 +299,28 @@ class UiReadForm(QWidget):
 			gRF.append(str(self.lableGifter.font().pointSize()))
 			gRF.append(str(self.lablePoint.font().pointSize()))
 			gRF.append(str(self.textBrowserDescription.font().pointSize()))
+
+			styleSheets['UiReadForm'] = {
+			'Title': self.Title.styleSheet(),
+			'titleSelection': self.titleSelection.styleSheet(),
+			'titleSubselection': self.titleSubselection.styleSheet(),
+			'labelNumber': self.labelNumber.styleSheet(),
+			'labelGifter': self.labelGifter.styleSheet(),
+			'labelDescription': self.labelDescription.styleSheet(),
+			'labelPoint': self.labelPoint.styleSheet(),
+			'labelSelection': self.labelSelection.styleSheet(),
+			'labelSubselection': self.labelSubselection.styleSheet(),
+			'labelTypeFond': self.labelTypeFond.styleSheet(),
+			'lableNumber': self.lableNumber.styleSheet(),
+			'lableGifter': self.lableGifter.styleSheet(),
+			'lablePoint': self.lablePoint.styleSheet(),
+			'textBrowserDescription': self.textBrowserDescription.styleSheet(),
+			'pushButtonDelite': self.pushButtonDelite.styleSheet(),
+			'pushButtonClose': self.pushButtonClose.styleSheet(),
+			'pushButtonEdit': self.pushButtonEdit.styleSheet()
+			}
+
+			WSL.append(self.styleSheet())
 		except:
 			global NullFile
 			NullFile = 1
@@ -241,10 +347,21 @@ class UiSettings(QWidget):
 			gSettings.append(str(self.themeComboBox.font().pointSize()))
 			gSettings.append(str(self.geometryLabel.font().pointSize()))
 			gSettings.append(str(self.geometryComboBox.font().pointSize()))
+
+			styleSheets['UiSettings'] = {
+			'Title': self.Title.styleSheet(),
+			'appyButton': self.appyButton.styleSheet(),
+			'themeLabel': self.themeLabel.styleSheet(),
+			'themeComboBox': self.themeComboBox.styleSheet(),
+			'geometryComboBox': self.geometryComboBox.styleSheet(),
+			'geometryLabel': self.geometryLabel.styleSheet()
+			}
+
+			WSL.append(self.styleSheet())
 		except:
 			global NullFile
 			NullFile = 1
-			print('Ошибка файла "Settings.ui"')
+			print('Ошибка файла "Settings.ui"') 
 
 class wSingIn(QWidget):
 	def __init__(self):
@@ -264,6 +381,17 @@ class wSingIn(QWidget):
 
 			gSI.append(str(self.Title.font().pointSize()))
 			gSI.append(str(self.listWidget.font().pointSize()))
+
+			styleSheets['wSingIn'] = {
+			'Title': self.Title.styleSheet(),
+			'listWidget': self.listWidget.styleSheet(),
+			'editButton': self.editButton.styleSheet(),
+			'addButton': self.addButton.styleSheet(),
+			'removeButton': self.removeButton.styleSheet(),
+			'exitButton': self.exitButton.styleSheet()
+			}
+
+			WSL.append(self.styleSheet())
 		except:
 			global NullFile
 			NullFile = 1
@@ -291,6 +419,18 @@ class wAddDB(QWidget):
 			gADB.append(str(self.lineName.font().pointSize()))
 			gADB.append(str(self.labelConnect.font().pointSize()))
 			gADB.append(str(self.lineConnect.font().pointSize()))
+
+			styleSheets['wAddDB'] = {
+			'Title': self.Title.styleSheet(),
+			'labelName': self.labelName.styleSheet(),
+			'lineName': self.lineName.styleSheet(),
+			'labelConnect': self.labelConnect.styleSheet(),
+			'lineConnect': self.lineConnect.styleSheet(),
+			'addButton': self.addButton.styleSheet(),
+			'closeButton': self.closeButton.styleSheet()
+			}
+
+			WSL.append(self.styleSheet())
 		except:
 			global NullFile
 			NullFile = 1
@@ -318,7 +458,7 @@ if NullFile == 0:
 		except:
 			print('Размер шрифта должен содержать только цифры (1, 2, 3, 4, 5 ...)')
 
-	f = open('' + name + '.ini', 'w', encoding ="utf8")
+	f = open('' + name + '_Geometry.ini', 'w', encoding ="utf8")
 
 	f.write('''[Main]
 Window = {}
@@ -512,5 +652,20 @@ ButtonFontPointSize = {}'''.format\
 	gADB[0],gADB[1],gADB[2],gADB[3],gADB[4],gADB[5],gADB[6],gADB[7],gADB[8],gADB[9],gADB[10],gADB[11],gADB[12],\
 	buttonPointSize))
 	f.close()
+
+	styleSheets['WindowStyles'] = {
+	'Main': WSL[0],
+	'Fond': WSL[1],
+	'addForm': WSL[2],
+	'addFormPartTwo': WSL[3],
+	'UiSubselection': WSL[4],
+	'UiReadForm': WSL[5],
+	'UiSettings': WSL[6],
+	'wSingIn': WSL[7],
+	'wAddDB': WSL[8]
+	}
+
+	with open('' + name + '_Style.ini', 'w+', encoding ="utf8") as configfile:
+		styleSheets.write(configfile)
 
 input('\nНажмите "Enter", чтобы закрыть программу...\n')
