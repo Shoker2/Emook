@@ -2,6 +2,8 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5 import uic
 
+NullFile = 0
+
 def gg(object, list, i = 4):
 	if i != 4:
 		width = object.geometry().width()
@@ -19,233 +21,280 @@ def gg(object, list, i = 4):
 class Main(QWidget):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi("Workspace/Main.ui", self)
+		try:
+			uic.loadUi("Workspace/Main.ui", self)
 
-		global gMain
-		gMain = []
-		gg(self, gMain, 2)
-		gg(self.Title, gMain)
-		gg(self.labelSelection, gMain)
-		gg(self.allButton, gMain)
-		gg(self.addButton, gMain)
-		gg(self.exitButton, gMain)
-		gg(self.pushButton_1, gMain)
-		gg(self.pushButton_2, gMain)
-		gg(self.pushButton_3, gMain)
-		gg(self.pushButton_4, gMain)
-		gg(self.pushButton_5, gMain)
-		gg(self.pushButton_6, gMain)
-		gg(self.pushButton_7, gMain)
-		gg(self.pushButton_8, gMain)
-		gg(self.settingsButton, gMain)
+			global gMain
+			gMain = []
+			gg(self, gMain, 2)
+			gg(self.Title, gMain)
+			gg(self.labelSelection, gMain)
+			gg(self.allButton, gMain)
+			gg(self.addButton, gMain)
+			gg(self.exitButton, gMain)
+			gg(self.pushButton_1, gMain)
+			gg(self.pushButton_2, gMain)
+			gg(self.pushButton_3, gMain)
+			gg(self.pushButton_4, gMain)
+			gg(self.pushButton_5, gMain)
+			gg(self.pushButton_6, gMain)
+			gg(self.pushButton_7, gMain)
+			gg(self.pushButton_8, gMain)
+			gg(self.settingsButton, gMain)
 
-		gMain.append(str(self.Title.font().pointSize()))
-		gMain.append(str(self.labelSelection.font().pointSize()))
+			gMain.append(str(self.Title.font().pointSize()))
+			gMain.append(str(self.labelSelection.font().pointSize()))
+		except:
+			global NullFile
+			NullFile = 1
+			print('Ошибка файла "Main.ui"')
 
 class Fond(QWidget):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi("Workspace/Fond.ui", self)
+		try:
+			uic.loadUi("Workspace/Fond.ui", self)
 
-		global gFont
-		gFont = []
-		gg(self, gFont, 2)
-		gg(self.Title, gFont)
-		gg(self.listWidget, gFont)
-		gg(self.comboBoxSearch, gFont)
-		gg(self.labelSearch, gFont)
-		gg(self.backButton, gFont)
-		gg(self.labelSearch_2, gFont)
-		gg(self.comboBoxSearch_2, gFont)
-		gg(self.refreshButton, gFont)
-		gg(self.exporthButton, gFont)
-		gg(self.importButton, gFont)
+			global gFont
+			gFont = []
+			gg(self, gFont, 2)
+			gg(self.Title, gFont)
+			gg(self.listWidget, gFont)
+			gg(self.comboBoxSearch, gFont)
+			gg(self.labelSearch, gFont)
+			gg(self.backButton, gFont)
+			gg(self.labelSearch_2, gFont)
+			gg(self.comboBoxSearch_2, gFont)
+			gg(self.refreshButton, gFont)
+			gg(self.exporthButton, gFont)
+			gg(self.importButton, gFont)
 
-		gFont.append(str(self.Title.font().pointSize()))
-		gFont.append(str(self.labelSearch.font().pointSize()))
-		gFont.append(str(self.labelSearch_2.font().pointSize()))
-		gFont.append(str(self.listWidget.font().pointSize()))
+			gFont.append(str(self.Title.font().pointSize()))
+			gFont.append(str(self.labelSearch.font().pointSize()))
+			gFont.append(str(self.labelSearch_2.font().pointSize()))
+			gFont.append(str(self.listWidget.font().pointSize()))
+			gFont.append(str(self.comboBoxSearch.font().pointSize()))
+			gFont.append(str(self.comboBoxSearch_2.font().pointSize()))
+		except:
+			global NullFile
+			NullFile = 1
+			print('Ошибка файла "Fond.ui"')
 
 class addForm(QWidget):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi("Workspace/addForm.ui", self)
+		try:
+			uic.loadUi("Workspace/addForm.ui", self)
 
-		global gaddForm
-		gaddForm = []
-		gg(self, gaddForm, 2)
-		gg(self.Title, gaddForm)
-		gg(self.labelSelection, gaddForm)
-		gg(self.Section, gaddForm)
-		gg(self.labelSubselection, gaddForm)
-		gg(self.Subselection, gaddForm)
-		gg(self.radioButtonFond_1, gaddForm)
-		gg(self.radioButtonFond_2, gaddForm)
-		gg(self.nextButton, gaddForm)
-		gg(self.backButton, gaddForm)
-		gg(self.lineEditName, gaddForm)
-		gg(self.labelName, gaddForm)
-		gg(self.labelNumber, gaddForm)
-		gg(self.lineEditNumber, gaddForm)
+			global gaddForm
+			gaddForm = []
+			gg(self, gaddForm, 2)
+			gg(self.Title, gaddForm)
+			gg(self.labelSelection, gaddForm)
+			gg(self.Section, gaddForm)
+			gg(self.labelSubselection, gaddForm)
+			gg(self.Subselection, gaddForm)
+			gg(self.radioButtonFond_1, gaddForm)
+			gg(self.radioButtonFond_2, gaddForm)
+			gg(self.nextButton, gaddForm)
+			gg(self.backButton, gaddForm)
+			gg(self.lineEditName, gaddForm)
+			gg(self.labelName, gaddForm)
+			gg(self.labelNumber, gaddForm)
+			gg(self.lineEditNumber, gaddForm)
 
-		gaddForm.append(str(self.Title.font().pointSize()))
-		gaddForm.append(str(self.labelSelection.font().pointSize()))
-		gaddForm.append(str(self.Section.font().pointSize()))
-		gaddForm.append(str(self.labelSubselection.font().pointSize()))
-		gaddForm.append(str(self.Subselection.font().pointSize()))
-		gaddForm.append(str(self.radioButtonFond_1.font().pointSize()))
-		gaddForm.append(str(self.radioButtonFond_2.font().pointSize()))
-		gaddForm.append(str(self.lineEditName.font().pointSize()))
-		gaddForm.append(str(self.labelName.font().pointSize()))
-		gaddForm.append(str(self.labelNumber.font().pointSize()))
-		gaddForm.append(str(self.lineEditNumber.font().pointSize()))
+			gaddForm.append(str(self.Title.font().pointSize()))
+			gaddForm.append(str(self.labelSelection.font().pointSize()))
+			gaddForm.append(str(self.Section.font().pointSize()))
+			gaddForm.append(str(self.labelSubselection.font().pointSize()))
+			gaddForm.append(str(self.Subselection.font().pointSize()))
+			gaddForm.append(str(self.radioButtonFond_1.font().pointSize()))
+			gaddForm.append(str(self.radioButtonFond_2.font().pointSize()))
+			gaddForm.append(str(self.lineEditName.font().pointSize()))
+			gaddForm.append(str(self.labelName.font().pointSize()))
+			gaddForm.append(str(self.labelNumber.font().pointSize()))
+			gaddForm.append(str(self.lineEditNumber.font().pointSize()))
+		except:
+			global NullFile
+			NullFile = 1
+			print('Ошибка файла "addForm.ui"')
 
 class addFormPartTwo(QWidget):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi("Workspace/addFormPartTwo.ui", self)
+		try:
+			uic.loadUi("Workspace/addFormPartTwo.ui", self)
 
-		global gAFT
-		gAFT = []
-		gg(self, gAFT, 2)
-		gg(self.Title, gAFT)
-		gg(self.labelGifter, gAFT)
-		gg(self.lineEditGifter, gAFT)
-		gg(self.labelDescription, gAFT)
-		gg(self.textEditDescription, gAFT)
-		gg(self.labelPoint, gAFT)
-		gg(self.lineEditPoint, gAFT)
-		gg(self.saveButton, gAFT)
-		gg(self.backButton, gAFT)
+			global gAFT
+			gAFT = []
+			gg(self, gAFT, 2)
+			gg(self.Title, gAFT)
+			gg(self.labelGifter, gAFT)
+			gg(self.lineEditGifter, gAFT)
+			gg(self.labelDescription, gAFT)
+			gg(self.textEditDescription, gAFT)
+			gg(self.labelPoint, gAFT)
+			gg(self.lineEditPoint, gAFT)
+			gg(self.saveButton, gAFT)
+			gg(self.backButton, gAFT)
 
-		gAFT.append(str(self.Title.font().pointSize()))
-		gAFT.append(str(self.labelGifter.font().pointSize()))
-		gAFT.append(str(self.lineEditGifter.font().pointSize()))
-		gAFT.append(str(self.labelDescription.font().pointSize()))
-		gAFT.append(str(self.textEditDescription.font().pointSize()))
-		gAFT.append(str(self.labelPoint.font().pointSize()))
-		gAFT.append(str(self.lineEditPoint.font().pointSize()))
+			gAFT.append(str(self.Title.font().pointSize()))
+			gAFT.append(str(self.labelGifter.font().pointSize()))
+			gAFT.append(str(self.lineEditGifter.font().pointSize()))
+			gAFT.append(str(self.labelDescription.font().pointSize()))
+			gAFT.append(str(self.textEditDescription.font().pointSize()))
+			gAFT.append(str(self.labelPoint.font().pointSize()))
+			gAFT.append(str(self.lineEditPoint.font().pointSize()))
+		except:
+			global NullFile
+			NullFile = 1
+			print('Ошибка файла "addFormPartTwo.ui"')
 
 class UiSubselection(QWidget):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi("Workspace/Subselection.ui", self)
+		try:
+			uic.loadUi("Workspace/Subselection.ui", self)
 
-		global gSS
-		gSS = []
-		gg(self, gSS, 2)
-		gg(self.Title, gSS)
-		gg(self.labelSubselection, gSS)
-		gg(self.backButton, gSS)
-		gg(self.pushButton_1, gSS)
-		gg(self.pushButton_2, gSS)
-		gg(self.pushButton_3, gSS)
-		gg(self.pushButton_4, gSS)
+			global gSS
+			gSS = []
+			gg(self, gSS, 2)
+			gg(self.Title, gSS)
+			gg(self.labelSubselection, gSS)
+			gg(self.backButton, gSS)
+			gg(self.pushButton_1, gSS)
+			gg(self.pushButton_2, gSS)
+			gg(self.pushButton_3, gSS)
+			gg(self.pushButton_4, gSS)
 
-		gSS.append(str(self.Title.font().pointSize()))
-		gSS.append(str(self.labelSubselection.font().pointSize()))
+			gSS.append(str(self.Title.font().pointSize()))
+			gSS.append(str(self.labelSubselection.font().pointSize()))
+		except:
+			global NullFile
+			NullFile = 1
+			print('Ошибка файла "Subselection.ui"')
 
 class UiReadForm(QWidget):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi("Workspace/readFond.ui", self)
+		try:
+			uic.loadUi("Workspace/readFond.ui", self)
 
-		global gRF
-		gRF = []
-		gg(self, gRF, 2)
-		gg(self.Title, gRF)
-		gg(self.titleSelection, gRF)
-		gg(self.titleSubselection, gRF)
-		gg(self.labelNumber, gRF)
-		gg(self.labelGifter, gRF)
-		gg(self.labelDescription, gRF)
-		gg(self.labelPoint, gRF)
-		gg(self.labelSelection, gRF)
-		gg(self.labelSubselection, gRF)
-		gg(self.labelTypeFond, gRF)
-		gg(self.lableNumber, gRF)
-		gg(self.lableGifter, gRF)
-		gg(self.lablePoint, gRF)
-		gg(self.textBrowserDescription, gRF)
-		gg(self.pushButtonDelite, gRF)
-		gg(self.pushButtonClose, gRF)
-		gg(self.pushButtonEdit, gRF)
+			global gRF
+			gRF = []
+			gg(self, gRF, 2)
+			gg(self.Title, gRF)
+			gg(self.titleSelection, gRF)
+			gg(self.titleSubselection, gRF)
+			gg(self.labelNumber, gRF)
+			gg(self.labelGifter, gRF)
+			gg(self.labelDescription, gRF)
+			gg(self.labelPoint, gRF)
+			gg(self.labelSelection, gRF)
+			gg(self.labelSubselection, gRF)
+			gg(self.labelTypeFond, gRF)
+			gg(self.lableNumber, gRF)
+			gg(self.lableGifter, gRF)
+			gg(self.lablePoint, gRF)
+			gg(self.textBrowserDescription, gRF)
+			gg(self.pushButtonDelite, gRF)
+			gg(self.pushButtonClose, gRF)
+			gg(self.pushButtonEdit, gRF)
 
-		gRF.append(str(self.Title.font().pointSize()))
-		gRF.append(str(self.titleSelection.font().pointSize()))
-		gRF.append(str(self.titleSubselection.font().pointSize()))
-		gRF.append(str(self.labelNumber.font().pointSize()))
-		gRF.append(str(self.labelGifter.font().pointSize()))
-		gRF.append(str(self.labelDescription.font().pointSize()))
-		gRF.append(str(self.labelPoint.font().pointSize()))
-		gRF.append(str(self.labelSelection.font().pointSize()))
-		gRF.append(str(self.labelSubselection.font().pointSize()))
-		gRF.append(str(self.labelTypeFond.font().pointSize()))
-		gRF.append(str(self.lableNumber.font().pointSize()))
-		gRF.append(str(self.lableGifter.font().pointSize()))
-		gRF.append(str(self.lablePoint.font().pointSize()))
-		gRF.append(str(self.textBrowserDescription.font().pointSize()))
+			gRF.append(str(self.Title.font().pointSize()))
+			gRF.append(str(self.titleSelection.font().pointSize()))
+			gRF.append(str(self.titleSubselection.font().pointSize()))
+			gRF.append(str(self.labelNumber.font().pointSize()))
+			gRF.append(str(self.labelGifter.font().pointSize()))
+			gRF.append(str(self.labelDescription.font().pointSize()))
+			gRF.append(str(self.labelPoint.font().pointSize()))
+			gRF.append(str(self.labelSelection.font().pointSize()))
+			gRF.append(str(self.labelSubselection.font().pointSize()))
+			gRF.append(str(self.labelTypeFond.font().pointSize()))
+			gRF.append(str(self.lableNumber.font().pointSize()))
+			gRF.append(str(self.lableGifter.font().pointSize()))
+			gRF.append(str(self.lablePoint.font().pointSize()))
+			gRF.append(str(self.textBrowserDescription.font().pointSize()))
+		except:
+			global NullFile
+			NullFile = 1
+			print('Ошибка файла "readFond.ui"')
 
 class UiSettings(QWidget):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi("Workspace/Settings.ui", self)
+		try:
+			uic.loadUi("Workspace/Settings.ui", self)
 
-		global gSettings
-		gSettings = []
-		gg(self, gSettings, 2)
-		gg(self.Title, gSettings)
-		gg(self.appyButton, gSettings)
-		gg(self.themeLabel, gSettings)
-		gg(self.themeComboBox, gSettings)
-		gg(self.geometryComboBox, gSettings)
-		gg(self.geometryLabel, gSettings)
+			global gSettings
+			gSettings = []
+			gg(self, gSettings, 2)
+			gg(self.Title, gSettings)
+			gg(self.appyButton, gSettings)
+			gg(self.themeLabel, gSettings)
+			gg(self.themeComboBox, gSettings)
+			gg(self.geometryComboBox, gSettings)
+			gg(self.geometryLabel, gSettings)
 
-		gSettings.append(str(self.Title.font().pointSize()))
-		gSettings.append(str(self.themeLabel.font().pointSize()))
-		gSettings.append(str(self.themeComboBox.font().pointSize()))
-		gSettings.append(str(self.geometryLabel.font().pointSize()))
-		gSettings.append(str(self.geometryComboBox.font().pointSize()))
+			gSettings.append(str(self.Title.font().pointSize()))
+			gSettings.append(str(self.themeLabel.font().pointSize()))
+			gSettings.append(str(self.themeComboBox.font().pointSize()))
+			gSettings.append(str(self.geometryLabel.font().pointSize()))
+			gSettings.append(str(self.geometryComboBox.font().pointSize()))
+		except:
+			global NullFile
+			NullFile = 1
+			print('Ошибка файла "Settings.ui"')
 
 class wSingIn(QWidget):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi("Workspace/singin.ui", self)
+		try:
+			uic.loadUi("Workspace/singin.ui", self)
 
-		global gSI
-		gSI = []
-		gg(self, gSI, 2)
-		gg(self.Title, gSI)
-		gg(self.listWidget, gSI)
-		gg(self.editButton, gSI)
-		gg(self.addButton, gSI)
-		gg(self.removeButton, gSI)
-		gg(self.exitButton, gSI)
+			global gSI
+			gSI = []
+			gg(self, gSI, 2)
+			gg(self.Title, gSI)
+			gg(self.listWidget, gSI)
+			gg(self.editButton, gSI)
+			gg(self.addButton, gSI)
+			gg(self.removeButton, gSI)
+			gg(self.exitButton, gSI)
 
-		gSI.append(str(self.Title.font().pointSize()))
-		gSI.append(str(self.listWidget.font().pointSize()))
+			gSI.append(str(self.Title.font().pointSize()))
+			gSI.append(str(self.listWidget.font().pointSize()))
+		except:
+			global NullFile
+			NullFile = 1
+			print('Ошибка файла "singin.ui"')
 
 class wAddDB(QWidget):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi("Workspace/addDB.ui", self)
+		try:
+			uic.loadUi("Workspace/addDB.ui", self)
 
-		global gADB
-		gADB = []
-		gg(self, gADB, 2)
-		gg(self.Title, gADB)
-		gg(self.labelName, gADB)
-		gg(self.lineName, gADB)
-		gg(self.labelConnect, gADB)
-		gg(self.lineConnect, gADB)
-		gg(self.addButton, gADB)
-		gg(self.closeButton, gADB)
+			global gADB
+			gADB = []
+			gg(self, gADB, 2)
+			gg(self.Title, gADB)
+			gg(self.labelName, gADB)
+			gg(self.lineName, gADB)
+			gg(self.labelConnect, gADB)
+			gg(self.lineConnect, gADB)
+			gg(self.addButton, gADB)
+			gg(self.closeButton, gADB)
 
-		gADB.append(str(self.Title.font().pointSize()))
-		gADB.append(str(self.labelName.font().pointSize()))
-		gADB.append(str(self.lineName.font().pointSize()))
-		gADB.append(str(self.labelConnect.font().pointSize()))
-		gADB.append(str(self.lineConnect.font().pointSize()))
+			gADB.append(str(self.Title.font().pointSize()))
+			gADB.append(str(self.labelName.font().pointSize()))
+			gADB.append(str(self.lineName.font().pointSize()))
+			gADB.append(str(self.labelConnect.font().pointSize()))
+			gADB.append(str(self.lineConnect.font().pointSize()))
+		except:
+			global NullFile
+			NullFile = 1
+			print('Ошибка файла "addDB.ui"')
 
 app = QApplication(sys.argv)
 MainWin = Main()
@@ -258,12 +307,20 @@ UiSettingsWin = UiSettings()
 wSingInWin = wSingIn()
 wAddDBWin = wAddDB()
 
-name = input('Введите название геометрии: ')
-buttonPointSize = int(input('Размер шрифта у всех кнопок: '))
+if NullFile == 0:
+	name = input('Введите название геометрии: ')
 
-f = open('' + name + '.ini', 'w', encoding ="utf8")
+	ok = 0
+	while ok == 0:
+		try:
+			buttonPointSize = int(input('Размер шрифта у всех кнопок: '))
+			ok = 1
+		except:
+			print('Размер шрифта должен содержать только цифры (1, 2, 3, 4, 5 ...)')
 
-f.write('''[Main]
+	f = open('' + name + '.ini', 'w', encoding ="utf8")
+
+	f.write('''[Main]
 Window = {}
 Title = {}
 labelSelection = {}
@@ -300,6 +357,8 @@ FontTitle = {}
 FontlabelSearch = {}
 FontlabelSearch_2 = {}
 FontlistWidget = {}
+FontcomboBoxSearch = {}
+FontcomboBoxSearch_2 = {}
 
 [addForm]
 Window = {}
@@ -443,7 +502,7 @@ FontlineConnect = {}
 [Additions]
 ButtonFontPointSize = {}'''.format\
 (gMain[0], gMain[1], gMain[2], gMain[3], gMain[4], gMain[5], gMain[6], gMain[7], gMain[8], gMain[9], gMain[10], gMain[11], gMain[12], gMain[13], gMain[14], gMain[15], gMain[16],\
-	gFont[0], gFont[1], gFont[2], gFont[3], gFont[4], gFont[5], gFont[6], gFont[7], gFont[8], gFont[9], gFont[10], gFont[11], gFont[12], gFont[13], gFont[14],\
+	gFont[0], gFont[1], gFont[2], gFont[3], gFont[4], gFont[5], gFont[6], gFont[7], gFont[8], gFont[9], gFont[10], gFont[11], gFont[12], gFont[13], gFont[14],gFont[15], gFont[16],\
 	gaddForm[0], gaddForm[1], gaddForm[2], gaddForm[3], gaddForm[4], gaddForm[5], gaddForm[6], gaddForm[7], gaddForm[8], gaddForm[9], gaddForm[10], gaddForm[11], gaddForm[12], gaddForm[13], gaddForm[14], gaddForm[15], gaddForm[16], gaddForm[17], gaddForm[18], gaddForm[19], gaddForm[20], gaddForm[21], gaddForm[22], gaddForm[23], gaddForm[24],\
 	gAFT[0], gAFT[1], gAFT[2], gAFT[3], gAFT[4], gAFT[5], gAFT[6], gAFT[7], gAFT[8], gAFT[9], gAFT[10], gAFT[11], gAFT[12], gAFT[13], gAFT[14], gAFT[15], gAFT[16],\
 	gSS[0], gSS[1], gSS[2], gSS[3], gSS[4], gSS[5], gSS[6], gSS[7], gSS[8], gSS[9],\
@@ -452,4 +511,6 @@ ButtonFontPointSize = {}'''.format\
 	gSI[0],gSI[1],gSI[2],gSI[3],gSI[4],gSI[5],gSI[6],gSI[7],gSI[8],\
 	gADB[0],gADB[1],gADB[2],gADB[3],gADB[4],gADB[5],gADB[6],gADB[7],gADB[8],gADB[9],gADB[10],gADB[11],gADB[12],\
 	buttonPointSize))
-f.close()
+	f.close()
+
+input('\nНажмите "Enter", чтобы закрыть программу...\n')

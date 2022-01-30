@@ -31,8 +31,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Краевой музей МБУК ДК &quot;СЦК&quot;
-Кавказского сельского поселения</string>
+    <string>Учёт музейных фондов</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
