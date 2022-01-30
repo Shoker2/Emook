@@ -442,6 +442,4 @@
 
 ![image](https://user-images.githubusercontent.com/66993983/151688740-e4d31405-d03b-4cec-ba22-a933a31ace8d.png)
 
-[:arrow_up: К началу гайда](#гайд-по-приложению)
-
 [:arrow_up: В начало](#sem---shoker-electronic-museum)
