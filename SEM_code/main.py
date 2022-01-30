@@ -384,18 +384,17 @@ class Fond(Ui_Fond):
 		global forread
 		forread = []
 
-		nameid = collection.find()
+		nameid = collection.find({'Name': name})
 		for b in nameid:
-			if b['Name'] == name:
-				fonds = b['fonds']
-				select = b['select']
-				subselect = b['subselect']
-				number = b['number']
-				gifter = b['gifter']
-				point = b['point']
-				description = b['description']
+			fonds = b['fonds']
+			select = b['select']
+			subselect = b['subselect']
+			number = b['number']
+			gifter = b['gifter']
+			point = b['point']
+			description = b['description']
 
-				forread = [fonds, name, number, gifter, point, description, select, subselect]
+			forread = [fonds, name, number, gifter, point, description, select, subselect]
 		
 		if len(forread) != 0:
 			global readForm
@@ -951,8 +950,10 @@ class UiReadForm(Ui_readForm):
 
 	def editOpen(self):
 		readForm.hide()
+
 		uieditForm.Substitution()
 		uEFT.Substitution()
+
 		wineditForm.show()
 
 	def retranslateUi(self, main):
@@ -1235,6 +1236,7 @@ class editForm(Ui_addForm):
 
 	def Substitution(self):
 		self.Section.setCurrentText(forread[6])
+		self.selectionClicked(self.Section.currentText())
 		self.Subselection.setCurrentText(forread[7])
 
 		if forread[0] == 'Основной фонд':
@@ -1313,41 +1315,32 @@ class editFormPartTwo(Ui_addFormTwo):
 		self.Title.setText("Редактировать экспонат")
 		self.saveButton.setText("Изменить")
 
-	def Del(self):  # Удаление экспоната из базы данных
-		selection = forread[6]
-		subselection = forread[7]
-
-		db = cluster['Все']
-		collection = db['none']
-		collection.delete_one({'Name': forread[1]})
-
 	def save(self): # Сохранение экспаната в базу данных
 		selection = selectionAdd
 		subselection = subselectionAdd
 		fonds = fondsAdd
 		Name = nameAdd
 		number = numberAdd
+		gifter = self.lineEditGifter.text()
+		point = self.lineEditPoint.text()
+		description = self.textEditDescription.toPlainText()
 
 		db = cluster['Все']
 		collection = db['none']
 
+		post = {'fonds': fonds, 'select': selection, 'subselect': subselection , 'Name': Name, 'number': number, 'gifter': gifter, 'point': point, 'description': description}
+
 		if Name != '':
-			if collection.count_documents({'Name': Name}) == 0 or Name == str(forread[1]):
-				self.Del()
-
-				gifter = self.lineEditGifter.text()
-				point = self.lineEditPoint.text()
-				description = self.textEditDescription.toPlainText()
-
-				post = {'fonds': fonds, 'select': selection, 'subselect': subselection , 'Name': Name, 'number': number, 'gifter': gifter, 'point': point, 'description': description}
-
-				db = cluster['Все']
-				collection = db['none']
-				collection.insert_one(post)
-
+			if str(Name) == str(forread[1]):
+				collection.update_one({'Name': forread[1]}, {'$set': post})
 				self.mainOpen()
+
+			elif collection.count_documents({'Name': Name}) == 0:
+				collection.update_one({'Name': forread[1]}, {'$set': post})
+				self.mainOpen()
+
 			else:
-				messageBox('Ошибка названия', 'Введено уже существующее название экспоната', QMessageBox.Critical)
+				messageBox('Ошибка названия', 'Введено название уже существующего экспоната', QMessageBox.Critical)
 		else:
 			messageBox('Ошибка названия', 'Не введено название экспонат', QMessageBox.Critical)
 
