@@ -446,9 +446,11 @@
 
 ![image](https://user-images.githubusercontent.com/66993983/151710600-a7687a07-1d18-4d5b-807c-2b5f13c51512.png)
 
-Дальше просто перемещаем файл геометрии в папку с геометриями, а файл с темой в папку с темами
+Дальше просто перемещаем файл геометрии в папку с геометриями
 
 ![image](https://user-images.githubusercontent.com/66993983/151710684-0a9e1a56-493a-4e6c-83bb-a6f7b325d246.png)
+
+А файл с темой в папку с темами
 
 ![image](https://user-images.githubusercontent.com/66993983/151710749-ec5a6202-20f7-4d07-808e-ba512842b369.png)
 
