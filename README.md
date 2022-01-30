@@ -3,10 +3,10 @@
 
 ## Оглавление
 - [Установка приложения](#установка-приложения)
-- [Создание и подключение к базе данных](https://scribehow.com/shared/Mongodb_Podklyuchenie_k_baze_dannyh__G29hF1GYQA6d9YGQwuXnow) (Ссылка на другой сайт)
+- [Создание и настройки базы данных](#создание-и-настройки-базы-данных)
+- [Получение строки для подключения к базе данных](#получение-строки-для-подключения-к-базе-данных)
 - [Гайд по приложению](#гайд-по-приложению)
 - [Создание геометрии](#создание-геометрии)
-
 
 ## Установка приложения
 
@@ -23,6 +23,105 @@
 ![image](https://user-images.githubusercontent.com/66993983/151669329-e814895c-4f87-4073-8236-d258bef261be.png)
 
 Готово! Вы установили приложение.
+
+[:arrow_up: В начало](#sem---shoker-electronic-museum)
+
+## Создание и настройки базы данных
+
+Чтобы создать базу данных, для начала нужно перейти на сайт [MongoDB](https://www.mongodb.com) и зарегистрироваться там
+
+![image](https://user-images.githubusercontent.com/66993983/151689140-681d672f-9400-4fb1-a21c-9fbbf857830b.png)
+![image](https://user-images.githubusercontent.com/66993983/151689146-e5d76268-13cf-41a7-b8b8-8cad9043768b.png)
+
+Дальше, вам нужно подтвердить почту, которую вы указывали при регистрации
+
+![image](https://user-images.githubusercontent.com/66993983/151689185-9e495208-3daf-4418-ae4f-a99af9133f26.png)
+
+В открывшемся окне, после регистрации выберите во всех пунктах любые варианты ответов и нажмите "Finish"
+
+![image](https://user-images.githubusercontent.com/66993983/151689217-6da205ca-e28b-4c65-84d9-b75ee50051f0.png)
+
+![image](https://user-images.githubusercontent.com/66993983/151689228-0bdb53c1-5cbb-4d26-bb13-d5a9085f1461.png)
+
+Нажмите "Create" в бесплатном тарифном плане
+
+![image](https://user-images.githubusercontent.com/66993983/151689264-0f2330ae-cf3b-475b-8d9d-f854a2c28dff.png)
+
+Дальше нажмите "Create Cluster"
+
+![image](https://user-images.githubusercontent.com/66993983/151689297-ca335058-2d1f-4d08-b9d5-a33a40ccb2dc.png)
+
+Перейдите в "Database Access"
+
+![image](https://user-images.githubusercontent.com/66993983/151689349-f823cbce-c551-4345-a31a-db2b49f14410.png)
+
+Нажмите "Add New Database User"
+
+![image](https://user-images.githubusercontent.com/66993983/151689375-4e5f4b47-131e-4c34-aba4-7bb9654854c7.png)
+
+Выберите Введите имя пользователя базы данных и пароль для него
+
+![image](https://user-images.githubusercontent.com/66993983/151689409-928f3e70-dc99-4c87-a7dd-c000a892d22d.png)
+
+Нажмите "Add User"
+
+![image](https://user-images.githubusercontent.com/66993983/151689434-2e017bb0-8ba1-48f1-b0ac-124e8ebef6f9.png)
+
+Перейдите в "Network Access"
+
+![image](https://user-images.githubusercontent.com/66993983/151689449-3d09317e-dab8-415b-bcae-2512c41b56b1.png)
+
+Нажмите "Add IP address"
+
+![image](https://user-images.githubusercontent.com/66993983/151689468-34898fc0-14b5-46e3-8d99-a386750a21c7.png)
+
+Чтобы в базу данных можно было заходить с любого места, нажмите "Allow Access From Anywhere" (Так сделаю я)
+
+![image](https://user-images.githubusercontent.com/66993983/151689492-52d62cd5-72e4-43ef-a78c-48b38a339fc3.png)
+
+А если хотите, чтобы в базу данных можно было заходить с текущего IP адреса, нажмите "Add Current IP Address"
+
+![image](https://user-images.githubusercontent.com/66993983/151689547-f0952fd1-d0cd-42e7-a0be-c06c3bf97359.png)
+
+Далее нажмите "Confirm"
+
+![image](https://user-images.githubusercontent.com/66993983/151689579-5b4fc508-38f6-47ed-b9ad-a48af16e70c6.png)
+
+Отлично! Вы настроили базу данных.
+
+## Получение строки для подключения к базе данных
+
+Перейдите в "Databases"
+
+![image](https://user-images.githubusercontent.com/66993983/151689657-41679de7-9e02-46fa-a9ab-280c0465ef94.png)
+
+Нажмите "Connect"
+
+![image](https://user-images.githubusercontent.com/66993983/151689668-56cd96f8-4d2b-4098-830c-e68a57ec9268.png)
+
+Выберите "Connect your application"
+
+![image](https://user-images.githubusercontent.com/66993983/151689680-eeb1e811-daf4-4356-bfb8-f078e86af2bd.png)
+
+В пункте "Driver" выберите "Python", а в "Version" выберите "3.6 or later"
+
+![image](https://user-images.githubusercontent.com/66993983/151689723-aae22001-25e8-4b54-8ed5-7d7c0b73def7.png)
+
+Скопируйте строку для подключения, для этого нажмите на значок копирования
+
+![image](https://user-images.githubusercontent.com/66993983/151689751-9fcaa5ec-7176-4b8d-8e5d-b205591d70da.png)
+
+В этой строке есть имя и пароль от пользователя базы данных (Логин:Пароль), но пароль не вписан.
+
+В этой строке, нужно заменить "<password>", на тот пароль, который вы делали для этого пользователя базы данных
+
+Если имя пользователя базы данных не совпадает, то откройте блокнот и замените неправильное имя, на правильное.
+
+![image](https://user-images.githubusercontent.com/66993983/151689840-c455ef71-c809-4c62-a34a-a0f62d4bd399.png) 
+ 
+Отлично! Теперь у вас есть готовая строка для подключения к базе данных.
+ 
+Как добавить базу данных в приложение, вы можете посмотреть [здесь](#добавление-базы-данных)
 
 [:arrow_up: В начало](#sem---shoker-electronic-museum)
 
@@ -51,7 +150,7 @@
 
 ![image](https://user-images.githubusercontent.com/66993983/151669830-2613e1ef-2528-443d-8355-51b847a7269d.png)
 
-Далее нужно просто ввести название для базы данных (Оно будет отображаться в вашем списке с базами данных в нижнем регистре)
+Далее нужно просто ввести название для базы данных (Оно будет отображаться в вашем списке с базами данных в нижнем регистре), а также строку для подключения (как её получить вы можете узнать [здесь](#получение-строки-для-подключения-к-базе-данных))
 
 ![image](https://user-images.githubusercontent.com/66993983/151669875-7b12f1be-9b66-48dd-b7a7-8d23c21293df.png)
 
