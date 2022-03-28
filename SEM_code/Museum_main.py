@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:/Users/Иван/Desktop/Музейное дело/Museum_main.ui'
+# Form implementation generated from reading ui file 'C:/Users/Иван/Desktop/Main.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Main(object):
     def setupUi(self, Main):
         Main.setObjectName("Main")
-        Main.resize(615, 440)
+        Main.resize(625, 437)
         Main.setStyleSheet("")
         self.Title = QtWidgets.QLabel(Main)
         self.Title.setGeometry(QtCore.QRect(10, 20, 591, 81))
@@ -102,6 +102,12 @@ class Ui_Main(object):
         font.setPointSize(11)
         self.settingsButton.setFont(font)
         self.settingsButton.setObjectName("settingsButton")
+        self.pushButton_9 = QtWidgets.QPushButton(Main)
+        self.pushButton_9.setGeometry(QtCore.QRect(20, 310, 111, 31))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.pushButton_9.setFont(font)
+        self.pushButton_9.setObjectName("pushButton_9")
 
         self.retranslateUi(Main)
         QtCore.QMetaObject.connectSlotsByName(Main)
@@ -109,8 +115,7 @@ class Ui_Main(object):
     def retranslateUi(self, Main):
         _translate = QtCore.QCoreApplication.translate
         Main.setWindowTitle(_translate("Main", "Form"))
-        self.Title.setText(_translate("Main", "Краевой музей МБУК ДК \"СЦК\"\n"
-"Кавказского сельского поселения"))
+        self.Title.setText(_translate("Main", "Учёт музейных фондов"))
         self.labelSelection.setText(_translate("Main", "Выберите раздел фонда музея"))
         self.allButton.setText(_translate("Main", "Все"))
         self.addButton.setText(_translate("Main", "Добавить экспонат"))
@@ -124,6 +129,7 @@ class Ui_Main(object):
         self.pushButton_7.setText(_translate("Main", "Предметы исторической техники"))
         self.pushButton_8.setText(_translate("Main", "Предметы печатной продукции"))
         self.settingsButton.setText(_translate("Main", "Настройки"))
+        self.pushButton_9.setText(_translate("Main", "Прочее"))
 
 
 if __name__ == "__main__":

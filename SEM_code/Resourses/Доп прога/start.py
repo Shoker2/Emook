@@ -43,6 +43,7 @@ class Main(QWidget):
 			gg(self.pushButton_6, gMain)
 			gg(self.pushButton_7, gMain)
 			gg(self.pushButton_8, gMain)
+			gg(self.pushButton_9, gMain)
 			gg(self.settingsButton, gMain)
 
 			gMain.append(str(self.Title.font().pointSize()))
@@ -63,6 +64,7 @@ class Main(QWidget):
 			'pushButton_6': self.pushButton_6.styleSheet(),
 			'pushButton_7': self.pushButton_7.styleSheet(),
 			'pushButton_8': self.pushButton_8.styleSheet(),
+			'pushButton_9': self.pushButton_9.styleSheet(),
 			'settingsButton': self.settingsButton.styleSheet()
 			}
 			global WSL
@@ -475,6 +477,7 @@ pushButton_5 = {}
 pushButton_6 = {}
 pushButton_7 = {}
 pushButton_8 = {}
+pushButton_9 = {}
 settingsButton = {}
 
 FontTitle = {}
@@ -641,7 +644,7 @@ FontlineConnect = {}
 
 [Additions]
 ButtonFontPointSize = {}'''.format\
-(gMain[0], gMain[1], gMain[2], gMain[3], gMain[4], gMain[5], gMain[6], gMain[7], gMain[8], gMain[9], gMain[10], gMain[11], gMain[12], gMain[13], gMain[14], gMain[15], gMain[16],\
+(gMain[0], gMain[1], gMain[2], gMain[3], gMain[4], gMain[5], gMain[6], gMain[7], gMain[8], gMain[9], gMain[10], gMain[11], gMain[12], gMain[13], gMain[14], gMain[15], gMain[16], gMain[16],\
 	gFont[0], gFont[1], gFont[2], gFont[3], gFont[4], gFont[5], gFont[6], gFont[7], gFont[8], gFont[9], gFont[10], gFont[11], gFont[12], gFont[13], gFont[14],gFont[15], gFont[16],\
 	gaddForm[0], gaddForm[1], gaddForm[2], gaddForm[3], gaddForm[4], gaddForm[5], gaddForm[6], gaddForm[7], gaddForm[8], gaddForm[9], gaddForm[10], gaddForm[11], gaddForm[12], gaddForm[13], gaddForm[14], gaddForm[15], gaddForm[16], gaddForm[17], gaddForm[18], gaddForm[19], gaddForm[20], gaddForm[21], gaddForm[22], gaddForm[23], gaddForm[24],\
 	gAFT[0], gAFT[1], gAFT[2], gAFT[3], gAFT[4], gAFT[5], gAFT[6], gAFT[7], gAFT[8], gAFT[9], gAFT[10], gAFT[11], gAFT[12], gAFT[13], gAFT[14], gAFT[15], gAFT[16],\

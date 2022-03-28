@@ -1,5 +1,6 @@
 import threading # Стандартные
 import os
+import os.path
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets # Сторонние
@@ -28,9 +29,18 @@ def themeSelect(i=1):
 	global ButtonFontPointSize
 	global style
 	global logo
+	global configWay
+	configWay = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Documents') + '\\semconfig.ini'
+
+	check_config = os.path.exists(configWay)
+
+	if check_config == False:
+		cc = open(configWay, "w+", encoding ="utf8")
+		cc.write('[Settings]\ntheme = Голубая светлая\ngeometry = Стандарт\n\n[databases]')
+		cc.close()
 
 	config = configparser.ConfigParser() # Открытие config файла
-	config.read('Resourses\\config.ini', encoding ="utf8")
+	config.read(configWay, encoding ="utf8")
 
 	try:
 		geometry = configparser.ConfigParser() # Открытие файла с геометрией объектов
@@ -43,7 +53,7 @@ def themeSelect(i=1):
 		geometry = None
 		config['Settings']['geometry'] = 'Стандарт'
 
-		with open('Resourses\\config.ini', 'w+', encoding ="utf8") as configfile:
+		with open(configWay, 'w+', encoding ="utf8") as configfile:
 			config.write(configfile)
 		if i != 2:
 			themeSelect(2)
@@ -130,6 +140,8 @@ class main(Ui_Main):
 			self.pushButton_7.setGeometry(QtCore.QRect(x, y, w, h))
 			x, y, w, h = cgs('Main', 'pushButton_8', 4)
 			self.pushButton_8.setGeometry(QtCore.QRect(x, y, w, h))
+			x, y, w, h = cgs('Main', 'pushButton_9', 4)
+			self.pushButton_9.setGeometry(QtCore.QRect(x, y, w, h))
 			x, y, w, h = cgs('Main', 'settingsButton', 4)
 			self.settingsButton.setGeometry(QtCore.QRect(x, y, w, h))
 
@@ -145,6 +157,7 @@ class main(Ui_Main):
 			self.pushButton_6.setFont(ButtonFontPointSize)
 			self.pushButton_7.setFont(ButtonFontPointSize)
 			self.pushButton_8.setFont(ButtonFontPointSize)
+			self.pushButton_9.setFont(ButtonFontPointSize)
 
 			font = QtGui.QFont()
 			font.setPointSize(int(geometry['Main']['FontTitle']))
@@ -169,6 +182,7 @@ class main(Ui_Main):
 			self.pushButton_6.setStyleSheet(str(styleSheets['Main']['pushButton_6']))
 			self.pushButton_7.setStyleSheet(str(styleSheets['Main']['pushButton_7']))
 			self.pushButton_8.setStyleSheet(str(styleSheets['Main']['pushButton_8']))
+			self.pushButton_9.setStyleSheet(str(styleSheets['Main']['pushButton_9']))
 		except:
 			pass
 		
@@ -181,6 +195,7 @@ class main(Ui_Main):
 		self.pushButton_6.clicked.connect(lambda: self.selectionClicked(self.pushButton_6.text()))
 		self.pushButton_7.clicked.connect(lambda: self.selectionClicked(self.pushButton_7.text()))
 		self.pushButton_8.clicked.connect(lambda: self.selectionClicked(self.pushButton_8.text()))
+		self.pushButton_9.clicked.connect(lambda: self.selectionClicked(self.pushButton_9.text()))
 		self.allButton.clicked.connect(lambda: self.selectionClicked(self.allButton.text()))
 		self.settingsButton.clicked.connect(lambda: self.settingsOpen())
 		self.exitButton.clicked.connect(lambda: self.back())
@@ -236,7 +251,7 @@ class main(Ui_Main):
 			uiSubselection.setupUi(winSubselection)
 			winSubselection.show()
 
-		elif selection == 'Археология' or selection == 'Оружие' or selection == 'Документы, фотографии' or selection == 'Предметы исторической техники' or selection == 'Все':
+		elif selection == 'Археология' or selection == 'Оружие' or selection == 'Документы, фотографии' or selection == 'Предметы исторической техники' or selection == 'Все' or 'Прочее':
 			winFond = QtWidgets.QWidget()
 			uiFond = Fond()
 			uiFond.setupUi(winFond)
@@ -413,42 +428,51 @@ class Fond(Ui_Fond):
 		self.open(name)
 		
 	def openInBoxId(self, id): # Открытие через поиск по названию
-		self.comboBoxSearch_2.setCurrentText("")
-		nameid = collection.find()
-		for b in nameid:
-			if b['number'] == id:
-				name = b['Name']
-		self.open(name)
+		try:
+			self.comboBoxSearch_2.setCurrentText("")
+			nameid = collection.find()
+			for b in nameid:
+				if b['number'] == id:
+					name = b['Name']
+			self.open(name)
+		except:
+			pass
 
 	def openInList(self): # Открытие со списка
-		id = int(self.listWidget.currentRow())
-		name = listItems[id]
-		self.open(name)
+		try:
+			id = int(self.listWidget.currentRow())
+			name = listItems[id]
+			self.open(name)
+		except:
+			pass
 
 	def open(self, name): # Открытие окнв с информацией о экспонате
-		wineditFormTwo.hide()
-		wineditForm.hide()
-		global forread
-		forread = []
+		try:
+			wineditFormTwo.hide()
+			wineditForm.hide()
+			global forread
+			forread = []
 
-		nameid = collection.find({'Name': name})
-		for b in nameid:
-			fonds = b['fonds']
-			select = b['select']
-			subselect = b['subselect']
-			number = b['number']
-			gifter = b['gifter']
-			point = b['point']
-			description = b['description']
+			nameid = collection.find({'Name': name})
+			for b in nameid:
+				fonds = b['fonds']
+				select = b['select']
+				subselect = b['subselect']
+				number = b['number']
+				gifter = b['gifter']
+				point = b['point']
+				description = b['description']
 
-			forread = [fonds, name, number, gifter, point, description, select, subselect]
-		
-		if len(forread) != 0:
-			global readForm
-			readForm = QtWidgets.QWidget()
-			uiRead = UiReadForm()
-			uiRead.setupUi(readForm)
-			readForm.show()
+				forread = [fonds, name, number, gifter, point, description, select, subselect]
+			
+			if len(forread) != 0:
+				global readForm
+				readForm = QtWidgets.QWidget()
+				uiRead = UiReadForm()
+				uiRead.setupUi(readForm)
+				readForm.show()
+		except:
+			pass
 
 	def getList(self, way): # Получает таблицу exel с базы данных
 		exlName = []
@@ -642,6 +666,7 @@ class addForm(Ui_addForm):
 		self.Section.addItem("Документы, фотографии")
 		self.Section.addItem("Предметы исторической техники")
 		self.Section.addItem("Предметы печатной продукции")
+		self.Section.addItem("Прочее")
 
 		self.selectionClicked(self.Section.currentText())
 
@@ -1211,7 +1236,7 @@ class UiSettings(Ui_Settings):
 		config['Settings']['theme'] = self.themeComboBox.currentText()
 		config['Settings']['geometry'] = self.geometryComboBox.currentText()
 
-		with open('Resourses\\config.ini', 'w+', encoding ="utf8") as configfile:
+		with open(configWay, 'w+', encoding ="utf8") as configfile:
 			config.write(configfile)
 
 		themeSelect()
@@ -1328,6 +1353,7 @@ class editForm(Ui_addForm):
 		self.Section.addItem("Документы, фотографии")
 		self.Section.addItem("Предметы исторической техники")
 		self.Section.addItem("Предметы печатной продукции")
+		self.Section.addItem("Прочее")
 
 		self.selectionClicked(self.Section.currentText())
 
@@ -1541,7 +1567,7 @@ class editFormPartTwo(Ui_addFormTwo):
 		wineditFormTwo.hide()
 		fondSelf.refresh()
 
-# New	
+# Sing In	
 
 class wSingIn(Ui_SingIn):
 	def setupUi(self, main):
@@ -1647,7 +1673,7 @@ class wSingIn(Ui_SingIn):
 		try:
 			del config['databases'][name]
 
-			with open('Resourses\\config.ini', 'w+', encoding ="utf8") as configfile:
+			with open(configWay, 'w+', encoding ="utf8") as configfile:
 				config.write(configfile)
 
 			uWSI.retranslateUi(winSingIn)
@@ -1768,7 +1794,7 @@ class wAddDB(Ui_addDB):
 
 			if test == 'Ok':
 				config['databases'][name] = connect
-				with open('Resourses\\config.ini', 'w+', encoding ="utf8") as configfile:
+				with open(configWay, 'w+', encoding ="utf8") as configfile:
 					config.write(configfile)
 				winAddDB.close()
 				uWSI.retranslateUi(winSingIn)
@@ -1867,7 +1893,7 @@ class wEditDB(Ui_addDB):
 			del config['databases'][self.name]
 			config['databases'][name] = connect
 
-			with open('Resourses\\config.ini', 'w+', encoding ="utf8") as configfile:
+			with open(configWay, 'w+', encoding ="utf8") as configfile:
 				config.write(configfile)
 
 			uWSI.retranslateUi(winSingIn)
