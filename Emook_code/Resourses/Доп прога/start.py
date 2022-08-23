@@ -86,11 +86,13 @@ class Fond(QWidget):
 			gg(self, gFont, 2)
 			gg(self.Title, gFont)
 			gg(self.listWidget, gFont)
-			gg(self.comboBoxSearch, gFont)
+			gg(self.search_name_button, gFont)
+			gg(self.search_name_line, gFont)
 			gg(self.labelSearch, gFont)
 			gg(self.backButton, gFont)
 			gg(self.labelSearch_2, gFont)
-			gg(self.comboBoxSearch_2, gFont)
+			gg(self.search_num_button, gFont)
+			gg(self.search_num_line, gFont)
 			gg(self.refreshButton, gFont)
 			gg(self.exporthButton, gFont)
 			gg(self.importButton, gFont)
@@ -99,18 +101,19 @@ class Fond(QWidget):
 			gFont.append(str(self.labelSearch.font().pointSize()))
 			gFont.append(str(self.labelSearch_2.font().pointSize()))
 			gFont.append(str(self.listWidget.font().pointSize()))
-			gFont.append(str(self.comboBoxSearch.font().pointSize()))
-			gFont.append(str(self.comboBoxSearch_2.font().pointSize()))
-
+			gFont.append(str(self.search_name_line.font().pointSize()))
+			gFont.append(str(self.search_num_line.font().pointSize()))
 
 			styleSheets['Fond'] = {
 			'Title': self.Title.styleSheet(),
 			'listWidget': self.listWidget.styleSheet(),
-			'comboBoxSearch': self.comboBoxSearch.styleSheet(),
+			'search_name_button': self.search_name_button.styleSheet(),
+			'search_name_line': self.search_name_line.styleSheet(),
+			'search_num_button': self.search_name_button.styleSheet(),
+			'search_num_line': self.search_name_line.styleSheet(),
 			'labelSearch': self.labelSearch.styleSheet(),
 			'backButton': self.backButton.styleSheet(),
 			'labelSearch_2': self.labelSearch_2.styleSheet(),
-			'comboBoxSearch_2': self.comboBoxSearch_2.styleSheet(),
 			'refreshButton': self.refreshButton.styleSheet(),
 			'exporthButton': self.exporthButton.styleSheet(),
 			'importButton': self.importButton.styleSheet()
@@ -462,198 +465,190 @@ if NullFile == 0:
 
 	f = open('' + name + '_Geometry.ini', 'w', encoding ="utf8")
 
-	f.write('''[Main]
-Window = {}
-Title = {}
-labelSelection = {}
-allButton = {}
-addButton = {}
-exitButton = {}
-pushButton_1 = {}
-pushButton_2 = {}
-pushButton_3 = {}
-pushButton_4 = {}
-pushButton_5 = {}
-pushButton_6 = {}
-pushButton_7 = {}
-pushButton_8 = {}
-pushButton_9 = {}
-settingsButton = {}
+	f.write(f'''[Main]
+Window = {gMain[0]}
+Title = {gMain[1]}
+labelSelection = {gMain[2]}
+allButton = {gMain[3]}
+addButton = {gMain[4]}
+exitButton = {gMain[5]}
+pushButton_1 = {gMain[6]}
+pushButton_2 = {gMain[7]}
+pushButton_3 = {gMain[8]}
+pushButton_4 = {gMain[9]}
+pushButton_5 = {gMain[10]}
+pushButton_6 = {gMain[11]}
+pushButton_7 = {gMain[12]}
+pushButton_8 = {gMain[13]}
+pushButton_9 = {gMain[14]}
+settingsButton = {gMain[15]}
 
-FontTitle = {}
-FontlabelSelection = {}
+FontTitle = {gMain[16]}
+FontlabelSelection = {gMain[17]}
 
 [Fond]
-Window = {}
-Title = {}
-listWidget = {}
-comboBoxSearch = {}
-labelSearch = {}
-backButton = {}
-labelSearch_2 = {}
-comboBoxSearch_2 = {}
-refreshButton = {}
-exporthButton = {}
-importButton = {}
+Window = {gFont[0]}
+Title = {gFont[1]}
+listWidget = {gFont[2]}
+search_name_button = {gFont[3]}
+search_name_line = {gFont[4]}
+labelSearch = {gFont[5]}
+backButton = {gFont[6]}
+labelSearch_2 = {gFont[7]}
+search_num_button = {gFont[8]}
+search_num_line = {gFont[9]}
+refreshButton = {gFont[10]}
+exporthButton = {gFont[11]}
+importButton = {gFont[12]}
 
-FontTitle = {}
-FontlabelSearch = {}
-FontlabelSearch_2 = {}
-FontlistWidget = {}
-FontcomboBoxSearch = {}
-FontcomboBoxSearch_2 = {}
+FontTitle = {gFont[13]}
+FontlabelSearch = {gFont[14]}
+FontlabelSearch_2 = {gFont[15]}
+FontlistWidget = {gFont[16]}
+Fontsearch_name_line = {gFont[17]}
+Fontsearch_num_line = {gFont[18]}
 
 [addForm]
-Window = {}
-Title = {}
-labelSelection = {}
-Section = {}
-labelSubselection = {}
-Subselection = {}
-radioButtonFond_1 = {}
-radioButtonFond_2 = {}
-nextButton = {}
-backButton = {}
-lineEditName = {}
-labelName = {}
-labelNumber = {}
-lineEditNumber = {}
+Window = {gaddForm[0]}
+Title = {gaddForm[1]}
+labelSelection = {gaddForm[2]}
+Section = {gaddForm[3]}
+labelSubselection = {gaddForm[4]}
+Subselection = {gaddForm[5]}
+radioButtonFond_1 = {gaddForm[6]}
+radioButtonFond_2 = {gaddForm[7]}
+nextButton = {gaddForm[8]}
+backButton = {gaddForm[9]}
+lineEditName = {gaddForm[10]}
+labelName = {gaddForm[11]}
+labelNumber = {gaddForm[12]}
+lineEditNumber = {gaddForm[13]}
 
-FontTitle = {}
-FontlabelSelection = {}
-FontSection = {}
-FontlabelSubselection = {}
-FontSubselection = {}
-FontradioButtonFond_1 = {}
-FontradioButtonFond_2 = {}
-FontlineEditName = {}
-FontlabelName = {}
-FontlabelNumber = {}
-FontlineEditNumber = {}
+FontTitle = {gaddForm[14]}
+FontlabelSelection = {gaddForm[15]}
+FontSection = {gaddForm[16]}
+FontlabelSubselection = {gaddForm[17]}
+FontSubselection = {gaddForm[18]}
+FontradioButtonFond_1 = {gaddForm[19]}
+FontradioButtonFond_2 = {gaddForm[20]}
+FontlineEditName = {gaddForm[21]}
+FontlabelName = {gaddForm[22]}
+FontlabelNumber = {gaddForm[23]}
+FontlineEditNumber = {gaddForm[24]}
 
 [addFormPartTwo]
-Window = {}
-Title = {}
-labelGifter = {}
-lineEditGifter = {}
-labelDescription = {}
-textEditDescription = {}
-labelPoint = {}
-lineEditPoint = {}
-saveButton = {}
-backButton = {}
+Window = {gAFT[0]}
+Title = {gAFT[1]}
+labelGifter = {gAFT[2]}
+lineEditGifter = {gAFT[3]}
+labelDescription = {gAFT[4]}
+textEditDescription = {gAFT[5]}
+labelPoint = {gAFT[6]}
+lineEditPoint = {gAFT[7]}
+saveButton = {gAFT[8]}
+backButton = {gAFT[9]}
 
-FontTitle = {}
-FontlabelGifter = {}
-FontlineEditGifter = {}
-FontlabelDescription = {}
-FonttextEditDescription = {}
-FontlabelPoint = {}
-FontlineEditPoint = {}
+FontTitle = {gAFT[10]}
+FontlabelGifter = {gAFT[11]}
+FontlineEditGifter = {gAFT[12]}
+FontlabelDescription = {gAFT[13]}
+FonttextEditDescription = {gAFT[14]}
+FontlabelPoint = {gAFT[15]}
+FontlineEditPoint = {gAFT[16]}
 
 [UiSubselection]
-Window = {}
-Title = {}
-labelSubselection = {}
-backButton = {}
-pushButton_1 = {}
-pushButton_2 = {}
-pushButton_3 = {}
-pushButton_4 = {}
+Window = {gSS[0]}
+Title = {gSS[1]}
+labelSubselection = {gSS[2]}
+backButton = {gSS[3]}
+pushButton_1 = {gSS[4]}
+pushButton_2 = {gSS[5]}
+pushButton_3 = {gSS[6]}
+pushButton_4 = {gSS[7]}
 
-FontTitle = {}
-FontlabelSubselection = {}
+FontTitle = {gSS[8]}
+FontlabelSubselection = {gSS[9]}
 
 [UiReadForm]
-Window = {}
-Title = {}
-titleSelection = {}
-titleSubselection = {}
-labelNumber = {}
-labelGifter = {}
-labelDescription = {}
-labelPoint = {}
-labelSelection = {}
-labelSubselection = {}
-labelTypeFond = {}
-lableNumber = {}
-lableGifter = {}
-lablePoint = {}
-textBrowserDescription = {}
-pushButtonDelite = {}
-pushButtonClose = {}
-pushButtonEdit = {}
+Window = {gRF[0]}
+Title = {gRF[1]}
+titleSelection = {gRF[2]}
+titleSubselection = {gRF[3]}
+labelNumber = {gRF[4]}
+labelGifter = {gRF[5]}
+labelDescription = {gRF[6]}
+labelPoint = {gRF[7]}
+labelSelection = {gRF[8]}
+labelSubselection = {gRF[9]}
+labelTypeFond = {gRF[10]}
+lableNumber = {gRF[11]}
+lableGifter = {gRF[12]}
+lablePoint = {gRF[13]}
+textBrowserDescription = {gRF[14]}
+pushButtonDelite = {gRF[15]}
+pushButtonClose = {gRF[16]}
+pushButtonEdit = {gRF[17]}
 
-FontTitle = {}
-FonttitleSelection = {}
-FonttitleSubselection = {}
-FontlabelNumber = {}
-FontlabelGifter = {}
-FontlabelDescription = {}
-FontlabelPoint = {}
-FontlabelSelection = {}
-FontlabelSubselection = {}
-FontlabelTypeFond = {}
-FontlableNumber = {}
-FontlableGifter = {}
-FontlablePoint = {}
-FonttextBrowserDescription = {}
+FontTitle = {gRF[18]}
+FonttitleSelection = {gRF[19]}
+FonttitleSubselection = {gRF[20]}
+FontlabelNumber = {gRF[21]}
+FontlabelGifter = {gRF[22]}
+FontlabelDescription = {gRF[23]}
+FontlabelPoint = {gRF[24]}
+FontlabelSelection = {gRF[25]}
+FontlabelSubselection = {gRF[26]}
+FontlabelTypeFond = {gRF[27]}
+FontlableNumber = {gRF[28]}
+FontlableGifter = {gRF[29]}
+FontlablePoint = {gRF[30]}
+FonttextBrowserDescription = {gRF[31]}
 
 [UiSettings]
-Window = {}
-Title = {}
-appyButton = {}
-themeLabel = {}
-themeComboBox = {}
-geometryComboBox = {}
-geometryLabel = {}
+Window = {gSettings[0]}
+Title = {gSettings[1]}
+appyButton = {gSettings[2]}
+themeLabel = {gSettings[3]}
+themeComboBox = {gSettings[4]}
+geometryComboBox = {gSettings[5]}
+geometryLabel = {gSettings[6]}
 
-FontTitle = {}
-FontthemeLabel = {}
-FontthemeComboBox = {}
-FontgeometryLabel = {}
-FontgeometryComboBox = {}
+FontTitle = {gSettings[7]}
+FontthemeLabel = {gSettings[8]}
+FontthemeComboBox = {gSettings[9]}
+FontgeometryLabel = {gSettings[10]}
+FontgeometryComboBox = {gSettings[11]}
 
 [wSingIn]
-Window = {}
-Title = {}
-listWidget = {}
-editButton = {}
-addButton = {}
-removeButton = {}
-exitButton = {}
+Window = {gSI[0]}
+Title = {gSI[1]}
+listWidget = {gSI[2]}
+editButton = {gSI[3]}
+addButton = {gSI[4]}
+removeButton = {gSI[5]}
+exitButton = {gSI[6]}
 
-FontTitle = {}
-FontlistWidget = {}
+FontTitle = {gSI[7]}
+FontlistWidget = {gSI[8]}
 
 [wAddDB]
-Window = {}
-Title = {}
-labelName = {}
-lineName = {}
-labelConnect = {}
-lineConnect = {}
-addButton = {}
-closeButton = {}
+Window = {gADB[0]}
+Title = {gADB[1]}
+labelName = {gADB[2]}
+lineName = {gADB[3]}
+labelConnect = {gADB[4]}
+lineConnect = {gADB[5]}
+addButton = {gADB[6]}
+closeButton = {gADB[7]}
 
-FontTitle = {}
-FontlabelName = {}
-FontlineName = {}
-FontlabelConnect = {}
-FontlineConnect = {}
+FontTitle = {gADB[8]}
+FontlabelName = {gADB[9]}
+FontlineName = {gADB[10]}
+FontlabelConnect = {gADB[11]}
+FontlineConnect = {gADB[12]}
 
 [Additions]
-ButtonFontPointSize = {}'''.format\
-(gMain[0], gMain[1], gMain[2], gMain[3], gMain[4], gMain[5], gMain[6], gMain[7], gMain[8], gMain[9], gMain[10], gMain[11], gMain[12], gMain[13], gMain[14], gMain[15], gMain[16], gMain[17],\
-	gFont[0], gFont[1], gFont[2], gFont[3], gFont[4], gFont[5], gFont[6], gFont[7], gFont[8], gFont[9], gFont[10], gFont[11], gFont[12], gFont[13], gFont[14],gFont[15], gFont[16],\
-	gaddForm[0], gaddForm[1], gaddForm[2], gaddForm[3], gaddForm[4], gaddForm[5], gaddForm[6], gaddForm[7], gaddForm[8], gaddForm[9], gaddForm[10], gaddForm[11], gaddForm[12], gaddForm[13], gaddForm[14], gaddForm[15], gaddForm[16], gaddForm[17], gaddForm[18], gaddForm[19], gaddForm[20], gaddForm[21], gaddForm[22], gaddForm[23], gaddForm[24],\
-	gAFT[0], gAFT[1], gAFT[2], gAFT[3], gAFT[4], gAFT[5], gAFT[6], gAFT[7], gAFT[8], gAFT[9], gAFT[10], gAFT[11], gAFT[12], gAFT[13], gAFT[14], gAFT[15], gAFT[16],\
-	gSS[0], gSS[1], gSS[2], gSS[3], gSS[4], gSS[5], gSS[6], gSS[7], gSS[8], gSS[9],\
-	gRF[0], gRF[1], gRF[2], gRF[3], gRF[4], gRF[5], gRF[6], gRF[7], gRF[8], gRF[9], gRF[10], gRF[11], gRF[12], gRF[13], gRF[14], gRF[15], gRF[16], gRF[17], gRF[18], gRF[19], gRF[20], gRF[21], gRF[22], gRF[23], gRF[24], gRF[25], gRF[26], gRF[27], gRF[28], gRF[29], gRF[30], gRF[31],\
-	gSettings[0], gSettings[1], gSettings[2], gSettings[3], gSettings[4], gSettings[5], gSettings[6], gSettings[7], gSettings[8], gSettings[9], gSettings[10], gSettings[11],\
-	gSI[0],gSI[1],gSI[2],gSI[3],gSI[4],gSI[5],gSI[6],gSI[7],gSI[8],\
-	gADB[0],gADB[1],gADB[2],gADB[3],gADB[4],gADB[5],gADB[6],gADB[7],gADB[8],gADB[9],gADB[10],gADB[11],gADB[12],\
-	buttonPointSize))
+ButtonFontPointSize = {buttonPointSize}''')
 	f.close()
 
 	styleSheets['WindowStyles'] = {
