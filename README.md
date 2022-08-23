@@ -266,8 +266,9 @@
 ![image](https://user-images.githubusercontent.com/66993983/151671949-4220d385-5e84-43e7-8dca-7d6d421a458a.png)
 
 Здесь вы можете искать экспонат как по названию, так и по номеру учётной записи.
+![image](https://user-images.githubusercontent.com/66993983/186230864-801a5da8-727f-4a31-937e-fb57259641b9.png)
+![image](https://user-images.githubusercontent.com/66993983/186230887-ce6dc97e-1f2b-4df2-8bf8-8abb3ae3f945.png)
 
-![image](https://user-images.githubusercontent.com/66993983/151671981-20b00459-4023-46b3-84d6-3caaf0f4193d.png)
 
 Также, если нажать на кнопку "Обновить", то обновится список экспонатов.
 
