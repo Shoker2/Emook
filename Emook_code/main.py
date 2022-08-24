@@ -189,11 +189,12 @@ class main(Ui_Main):
 				self.pushButton_8.setFont(ButtonFontPointSize)
 				self.pushButton_9.setFont(ButtonFontPointSize)
 
-				font = QtGui.QFont()
+				font = QtGui.QFont()	# Ставлю шрифты
 				font.setPointSize(int(geometry['Main']['FontTitle']))
 				self.Title.setFont(font)
 				font.setPointSize(int(geometry['Main']['FontlabelSelection']))
 				self.labelSelection.setFont(font)
+
 			except Exception:
 				logging.critical(traceback.format_exc().replace('"', '\''))
 
@@ -258,39 +259,34 @@ class main(Ui_Main):
 			wineditForm.close()
 			winaddFormTwo.close()
 			winForm.close()
-			try:
-				winSubselection.close()
-			except Exception:
-				logging.critical(traceback.format_exc().replace('"', '\''))
+			winSubselection.close()
 			try:
 				readForm.close()
-			except Exception:
-				logging.critical(traceback.format_exc().replace('"', '\''))
+			except NameError:
+				pass
 
 			winSingIn.show()
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
 
 	def selectionClicked(self, selection):
-		'''
-		Открытие нужного окна
-		(если это раздел имеет подраздел, то открывается окно выбора подраздела)
-		'''
 		try:
 			logging.info(f'{self.__class__.__name__} - selectionClicked')
 			global winFond
+			global uiFond
 			global winSubselection
+			global uiSubselection
 
 			Main.hide()
 
 			if selection == 'Изобразительные памятники' or selection == 'Нумизматика' or selection == 'Предметы этнографии' or selection == 'Предметы печатной продукции':
-				winSubselection = QtWidgets.QWidget()
+				winSubselection = QtWidgets.QWidget()	# Создаю окно выбора подраздела
 				uiSubselection = UiSubselection()
 				uiSubselection.setupUi(winSubselection, selection)
 				winSubselection.show()
 
 			elif selection == 'Археология' or selection == 'Оружие' or selection == 'Документы, фотографии' or selection == 'Предметы исторической техники' or selection == 'Все' or 'Прочее':
-				winFond = QtWidgets.QWidget()
+				winFond = QtWidgets.QWidget()	# Создаю окно со списком экспонатов
 				uiFond = Fond()
 				uiFond.setupUi(winFond, selection)
 		
@@ -306,15 +302,15 @@ class main(Ui_Main):
 			global uiaddForm
 			global UIaddFormTwo
 
-			winForm = QtWidgets.QWidget()
+			winForm = QtWidgets.QWidget()	# Создаю окно добавления экспоната
 			uiaddForm = addForm()
 			uiaddForm.setupUi(winForm)
 
-			winaddFormTwo = QtWidgets.QWidget()
+			winaddFormTwo = QtWidgets.QWidget()	# Создаю второе окно добавления экспоната
 			UIaddFormTwo = addFormPartTwo()
 			UIaddFormTwo.setupUi(winaddFormTwo)
 
-			winForm.show()
+			winForm.show() # Открываю первое окно
 		
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -426,11 +422,11 @@ class Fond(Ui_Fond):
 			self.exporthButton.clicked.connect(lambda: self.save())
 			self.importButton.clicked.connect(lambda: self.selectExel())
 
-			if subselectionMain != '':
+			if subselectionMain != '':	# Если есть подраздел, то использую подраздел и раздела в заголовке.
 				self.Title.setText(selectionMain + ': ' + subselectionMain)
-			elif selectionMain == 'Все':
+			elif selectionMain == 'Все':	# Если выбраны все разделы, то заголовок "Все"
 				self.Title.setText('Все фонды')
-			else:
+			else:	# Иначе заголовок это название раздела
 				self.Title.setText(selectionMain)
 
 			global collection
@@ -441,9 +437,6 @@ class Fond(Ui_Fond):
 			collection = db['none']
 			
 			self.refresh(2)
-
-			global fondSelf
-			fondSelf = self
 	
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -457,7 +450,7 @@ class Fond(Ui_Fond):
 		try:
 			logging.info(f'{self.__class__.__name__} - refresh')
 			s = []
-			if self.select == 'Все':
+			if self.select == 'Все':	# Получаю словарь с нужными экспонатами
 				nameid = collection.find()
 			else:
 				nameid = collection.find({'select': self.select, 'subselect': self.subselect})
@@ -465,17 +458,17 @@ class Fond(Ui_Fond):
 			if test != '1':
 				winFond.show()
 
-			self.dic_Items = {}
+			self.dic_Items = {}	# Этот словарь нужен в будующем для получения названия экспоната, если у него есть номер уч. заиси
 			self.listItems = []
 			self.listid = []
 			try:
 				for b in nameid:
-					s.append(b)
+					s.append(b)	# Беру только названия и номера учётных заисей
 					self.listItems.append(str(b['Name']))
 					self.listid.append(str(b['number']))
 				
 				self.listWidget.clear()
-				for i in range(len(self.listItems)):
+				for i in range(len(self.listItems)): # И вывожу всю информацию в список в окне
 					if self.listid[i] != '':
 						self.listWidget.addItem(self.listItems[i] + ' №' + self.listid[i])
 						self.dic_Items[self.listItems[i] + ' №' + self.listid[i]] = self.listItems[i]
@@ -500,9 +493,11 @@ class Fond(Ui_Fond):
 	def	search_name(self, text):
 		try:
 			logging.info(f'{self.__class__.__name__} - search_name')
+
 			self.listWidget.clear()
-			sorted_items = thefuzz_search(self.listItems, text)
-			for item in range(len(sorted_items)):
+			sorted_items = thefuzz_search(self.listItems, text)	# Получаю отсортированый список экспонатов по % совпадения
+
+			for item in range(len(sorted_items)):	# Вывожу всю информацию в список в окне
 				for b in collection.find({'Name': sorted_items[item]}):
 					num = str(b['number'])
 					if num != '':
@@ -516,9 +511,11 @@ class Fond(Ui_Fond):
 	def search_num(self, id): # Открытие через поиск по номеру учю записи
 		try:
 			logging.info(f'{self.__class__.__name__} - search_num')
+
 			self.listWidget.clear()
-			sorted_items = thefuzz_search_id(self.listid, id)
-			for item in range(len(sorted_items)):
+			sorted_items = thefuzz_search_id(self.listid, id) # Получаю отсортированый список экспонатов по % совпадения
+
+			for item in range(len(sorted_items)):	# Вывожу всю информацию в список в окне
 				for b in collection.find({'number': sorted_items[item]}):
 					Name = str(b['Name'])
 					self.listWidget.addItem(Name + ' №' + sorted_items[item])
@@ -526,24 +523,17 @@ class Fond(Ui_Fond):
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
 
-	def openInList(self, item): # Открытие со списка
-		try:
-			logging.info(f'{self.__class__.__name__} - openInList')
-			id = int(self.listWidget.currentRow())
-			name = self.dic_Items[item.text()]
-			self.open(name)
-		except Exception:
-			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
-
-	def open(self, name): # Открытие окнв с информацией о экспонате
+	def openInList(self, item): # Открытие окно с информацией о экспонате
 		try:
 			logging.info(f'{self.__class__.__name__} - open')
+			name = self.dic_Items[item.text()]	# Получаю название выбранного экспоната
+
 			wineditFormTwo.hide()
 			wineditForm.hide()
 			forread = []
 
-			nameid = collection.find({'Name': name})
-			for b in nameid:
+			nameid = collection.find({'Name': name})	# Получаю экспонат по его названию
+			for b in nameid:	# И тут я просто получаю и записываю все нужные данные
 				fonds = b['fonds']
 				select = b['select']
 				subselect = b['subselect']
@@ -554,12 +544,13 @@ class Fond(Ui_Fond):
 
 				forread = [fonds, name, number, gifter, point, description, select, subselect]
 			
-			if len(forread) != 0:
+			if len(forread) != 0: # Если данные есть, то открываю окно с инфой
 				global readForm
 				readForm = QtWidgets.QWidget()
 				uiRead = UiReadForm()
 				uiRead.setupUi(readForm, forread)
 				readForm.show()
+
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
 
@@ -786,6 +777,7 @@ class addForm(Ui_addForm):
 
 	def retranslateUi(self, main):
 		logging.info(f'{self.__class__.__name__} - retranslateUi')
+
 		Ui_addForm.retranslateUi(self, main)
 		main.setWindowTitle("Добавление экспоната")
 
@@ -851,11 +843,13 @@ class addForm(Ui_addForm):
 			numberAdd = self.lineEditNumber.text()
 
 			winForm.hide()
+
 			UIaddFormTwo.selectionAdd = selectionAdd
 			UIaddFormTwo.subselectionAdd = subselectionAdd
 			UIaddFormTwo.fondsAdd = fondsAdd
 			UIaddFormTwo.nameAdd = nameAdd
 			UIaddFormTwo.numberAdd = numberAdd
+
 			winaddFormTwo.show()
 
 		except Exception:
@@ -966,16 +960,17 @@ class addFormPartTwo(Ui_addFormTwo):
 			collection = db['none']
 
 			if Name != '':
-				if collection.count_documents({'Name': Name}) == 0:
+				if collection.count_documents({'Name': Name}) == 0: # Если в базе данных нет экспонатов с таким же названием
 					gifter = self.lineEditGifter.text()
-					point = self.lineEditPoint.text()
+					point = self.lineEditPoint.text()	# Получаю данные
 					description = self.textEditDescription.toPlainText()
 
 					post = {'fonds': fonds, 'select': selection, 'subselect': subselection , 'Name': Name, 'number': number, 'gifter': gifter, 'point': point, 'description': description}
 
 					db = cluster['Все']
 					collection = db['none']
-					collection.insert_one(post)
+
+					collection.insert_one(post) # Добавляю в БД
 
 					self.mainOpen()
 				else:
@@ -1111,6 +1106,7 @@ class UiSubselection(Ui_Subselection):
 			winSubselection.hide()
 
 			global winFond
+			global uiFond
 			winFond = QtWidgets.QWidget()
 			uiFond = Fond()
 			uiFond.setupUi(winFond, self.selectionMain, subselection)
@@ -1302,7 +1298,7 @@ class UiReadForm(Ui_readForm):
 			collection = db['none']
 			collection.delete_one({'Name': self.forread[1]})
 
-			fondSelf.refresh()
+			uiFond.refresh()
 			readForm.hide()
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -1769,7 +1765,7 @@ class editFormPartTwo(Ui_addFormTwo):
 	def mainOpen(self):
 		logging.info(f'{self.__class__.__name__} - mainOpen')
 		wineditFormTwo.hide()
-		fondSelf.refresh()
+		uiFond.refresh()
 
 # Sing In	
 
