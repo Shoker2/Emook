@@ -12,6 +12,8 @@
 
 Чтобы создать базу данных, для начала нужно перейти на сайт [MongoDB](https://www.mongodb.com) и зарегистрироваться там
 
+(В данный момент, чтобы попась на сайт [MongoDB](https://www.mongodb.com), нужно включить VPN. VPN понадобится только для создания и настройки базы данных. В приложении использовать VPN не требуется)
+
 ![image](https://user-images.githubusercontent.com/66993983/151689140-681d672f-9400-4fb1-a21c-9fbbf857830b.png)
 ![image](https://user-images.githubusercontent.com/66993983/151689146-e5d76268-13cf-41a7-b8b8-8cad9043768b.png)
 
