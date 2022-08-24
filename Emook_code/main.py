@@ -120,7 +120,7 @@ def messageBox(title, text, icon=None): # Окно ошибки
 
 def restart():
 	QtCore.QCoreApplication.quit()
-	status = QtCore.QProcess.startDetached(sys.executable, sys.argv)
+	QtCore.QProcess.startDetached(sys.executable, sys.argv)
 
 class main(Ui_Main):
 	def setupUi(self, main):
@@ -244,7 +244,7 @@ class main(Ui_Main):
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
 
-	def setTitle(self, main, name):
+	def setTitle(self, name):
 		logging.info(f'{self.__class__.__name__} - setTitle')
 		Main.setWindowTitle("Учёт музейных фондов - " + name)
 
@@ -278,26 +278,21 @@ class main(Ui_Main):
 		'''
 		try:
 			logging.info(f'{self.__class__.__name__} - selectionClicked')
-			global selectionMain
-			global subselectionMain
 			global winFond
 			global winSubselection
-
-			selectionMain = selection
-			subselectionMain = ''
 
 			Main.hide()
 
 			if selection == 'Изобразительные памятники' or selection == 'Нумизматика' or selection == 'Предметы этнографии' or selection == 'Предметы печатной продукции':
 				winSubselection = QtWidgets.QWidget()
 				uiSubselection = UiSubselection()
-				uiSubselection.setupUi(winSubselection)
+				uiSubselection.setupUi(winSubselection, selection)
 				winSubselection.show()
 
 			elif selection == 'Археология' or selection == 'Оружие' or selection == 'Документы, фотографии' or selection == 'Предметы исторической техники' or selection == 'Все' or 'Прочее':
 				winFond = QtWidgets.QWidget()
 				uiFond = Fond()
-				uiFond.setupUi(winFond)
+				uiFond.setupUi(winFond, selection)
 		
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -306,9 +301,19 @@ class main(Ui_Main):
 		try:
 			logging.info(f'{self.__class__.__name__} - addFormOpen')
 			Main.hide()
+			global winForm
+			global winaddFormTwo
+			global uiaddForm
+			global UIaddFormTwo
 
-			addForm.setupUi(salf, salfmain)
-			addFormPartTwo.setupUi(salk, salkmain)
+			winForm = QtWidgets.QWidget()
+			uiaddForm = addForm()
+			uiaddForm.setupUi(winForm)
+
+			winaddFormTwo = QtWidgets.QWidget()
+			UIaddFormTwo = addFormPartTwo()
+			UIaddFormTwo.setupUi(winaddFormTwo)
+
 			winForm.show()
 		
 		except Exception:
@@ -327,7 +332,7 @@ class main(Ui_Main):
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
 
 class Fond(Ui_Fond):
-	def setupUi(self, main):
+	def setupUi(self, main, selectionMain='', subselectionMain=''):
 		try:
 			logging.info(f'{self.__class__.__name__} - setupUi')
 			Ui_Fond.setupUi(self, main)
@@ -429,14 +434,12 @@ class Fond(Ui_Fond):
 				self.Title.setText(selectionMain)
 
 			global collection
-			global select
-			global subselect
-			select = selectionMain
-			subselect = subselectionMain
+			self.select = selectionMain
+			self.subselect = subselectionMain
 
 			db = cluster['Все']
 			collection = db['none']
-
+			
 			self.refresh(2)
 
 			global fondSelf
@@ -454,10 +457,10 @@ class Fond(Ui_Fond):
 		try:
 			logging.info(f'{self.__class__.__name__} - refresh')
 			s = []
-			if select == 'Все':
+			if self.select == 'Все':
 				nameid = collection.find()
 			else:
-				nameid = collection.find({'select': select, 'subselect': subselect})
+				nameid = collection.find({'select': self.select, 'subselect': self.subselect})
 
 			if test != '1':
 				winFond.show()
@@ -537,7 +540,6 @@ class Fond(Ui_Fond):
 			logging.info(f'{self.__class__.__name__} - open')
 			wineditFormTwo.hide()
 			wineditForm.hide()
-			global forread
 			forread = []
 
 			nameid = collection.find({'Name': name})
@@ -556,7 +558,7 @@ class Fond(Ui_Fond):
 				global readForm
 				readForm = QtWidgets.QWidget()
 				uiRead = UiReadForm()
-				uiRead.setupUi(readForm)
+				uiRead.setupUi(readForm, forread)
 				readForm.show()
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -573,10 +575,10 @@ class Fond(Ui_Fond):
 			exlPoint = []
 			exlDesc = []
 
-			if select == 'Все':
+			if self.select == 'Все':
 				nameid = collection.find()
 			else:
-				nameid = collection.find({'select': select, 'subselect': subselect})
+				nameid = collection.find({'select': self.select, 'subselect': self.subselect})
 			for b in nameid:
 				exlName.append(b['Name'])
 				exlFond.append(b['fonds'])
@@ -778,11 +780,6 @@ class addForm(Ui_addForm):
 			self.Section.addItem("Прочее")
 
 			self.selectionClicked(self.Section.currentText())
-
-			global salf
-			global salfmain
-			salf = self
-			salfmain = main
 		
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -842,12 +839,6 @@ class addForm(Ui_addForm):
 	def next(self): # Переход на следующюю страницу и сохранение текущих характеристик
 		try:
 			logging.info(f'{self.__class__.__name__} - next')
-			global selectionAdd
-			global subselectionAdd
-			global fondsAdd
-			global nameAdd
-			global numberAdd
-
 			selectionAdd = self.Section.currentText()
 			subselectionAdd = self.Subselection.currentText()
 
@@ -860,6 +851,11 @@ class addForm(Ui_addForm):
 			numberAdd = self.lineEditNumber.text()
 
 			winForm.hide()
+			UIaddFormTwo.selectionAdd = selectionAdd
+			UIaddFormTwo.subselectionAdd = subselectionAdd
+			UIaddFormTwo.fondsAdd = fondsAdd
+			UIaddFormTwo.nameAdd = nameAdd
+			UIaddFormTwo.numberAdd = numberAdd
 			winaddFormTwo.show()
 
 		except Exception:
@@ -949,11 +945,6 @@ class addFormPartTwo(Ui_addFormTwo):
 			self.backButton.clicked.connect(lambda: self.back())
 			self.saveButton.clicked.connect(lambda: self.save())
 
-			global salk
-			global salkmain
-			salk = self
-			salkmain = main
-		
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
 
@@ -965,11 +956,11 @@ class addFormPartTwo(Ui_addFormTwo):
 	def save(self): # Сохранение экспаната в базу данных
 		try:
 			logging.info(f'{self.__class__.__name__} - save')
-			selection = selectionAdd
-			subselection = subselectionAdd
-			fonds = fondsAdd
-			Name = nameAdd
-			number = numberAdd
+			selection = self.selectionAdd
+			subselection = self.subselectionAdd
+			fonds = self.fondsAdd
+			Name = self.nameAdd
+			number = self.numberAdd
 
 			db = cluster['Все']
 			collection = db['none']
@@ -1006,7 +997,7 @@ class addFormPartTwo(Ui_addFormTwo):
 		Main.show()
 
 class UiSubselection(Ui_Subselection):
-	def setupUi(self, main):
+	def setupUi(self, main, selectionMain=''):
 		try:
 			logging.info(f'{self.__class__.__name__} - setupUi')
 			Ui_Subselection.setupUi(self, main)
@@ -1102,6 +1093,8 @@ class UiSubselection(Ui_Subselection):
 				self.pushButton_2.setText("Брошуры, открытки")
 				self.pushButton_3.setText("Плакаты")
 				self.pushButton_4.setText("Другое")
+			
+			self.selectionMain = selectionMain
 		
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -1111,18 +1104,16 @@ class UiSubselection(Ui_Subselection):
 		Ui_Subselection.retranslateUi(self, main)
 		main.setWindowTitle("Учёт музейных фондов")
 
-	def selectionClicked(self, selection): # Переход к списку экспонатов
+	def selectionClicked(self, subselection): # Переход к списку экспонатов
 		try:
 			logging.info(f'{self.__class__.__name__} - selectionClicked')
-			global subselectionMain
-			subselectionMain = selection
 
 			winSubselection.hide()
 
 			global winFond
 			winFond = QtWidgets.QWidget()
 			uiFond = Fond()
-			uiFond.setupUi(winFond)
+			uiFond.setupUi(winFond, self.selectionMain, subselection)
 
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -1133,10 +1124,11 @@ class UiSubselection(Ui_Subselection):
 		Main.show()
 
 class UiReadForm(Ui_readForm):
-	def setupUi(self, main):
+	def setupUi(self, main, forread):
 		try:
 			logging.info(f'{self.__class__.__name__} - setupUi')
 			Ui_readForm.setupUi(self, main)
+			self.forread = forread
 			try:
 				main.setStyleSheet(styleSheets['WindowStyles']['UiReadForm'])
 			except Exception:
@@ -1188,7 +1180,7 @@ class UiReadForm(Ui_readForm):
 				self.pushButtonClose.setGeometry(QtCore.QRect(x, y, w, h))
 				x, y, w, h = cgs('UiReadForm', 'pushButtonEdit', 4)
 				self.pushButtonEdit.setGeometry(QtCore.QRect(x, y, w, h))
-
+				
 				font = QtGui.QFont() # Установка размера шрифта
 				font.setPointSize(int(geometry['UiReadForm']['FontTitle']))
 				self.Title.setFont(font)
@@ -1250,6 +1242,17 @@ class UiReadForm(Ui_readForm):
 			self.pushButtonDelite.clicked.connect(lambda: self.showDialog())
 			self.pushButtonClose.clicked.connect(lambda: readForm.close())
 			self.pushButtonEdit.clicked.connect(lambda: self.editOpen())
+
+			Ui_readForm.retranslateUi(self, main)
+			readForm.setWindowTitle("Данные экспоната")
+			self.Title.setText(self.forread[1])
+			self.labelSelection.setText(self.forread[6])
+			self.labelSubselection.setText(self.forread[7])
+			self.labelTypeFond.setText(self.forread[0])
+			self.lableNumber.setText(str(self.forread[2]))
+			self.lableGifter.setText(self.forread[3])
+			self.lablePoint.setText(self.forread[4])
+			self.textBrowserDescription.setHtml(self.forread[5])
 		
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -1259,27 +1262,10 @@ class UiReadForm(Ui_readForm):
 			logging.info(f'{self.__class__.__name__} - editOpen')
 			readForm.hide()
 
-			uieditForm.Substitution()
-			uEFT.Substitution()
+			uieditForm.Substitution(self.forread)
+			uEFT.Substitution(self.forread)
 
 			wineditForm.show()
-		
-		except Exception:
-			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
-
-	def retranslateUi(self, main):
-		try:
-			logging.info(f'{self.__class__.__name__} - retranslateUi')
-			Ui_readForm.retranslateUi(self, main)
-			readForm.setWindowTitle("Данные экспоната")
-			self.Title.setText(forread[1])
-			self.labelSelection.setText(forread[6])
-			self.labelSubselection.setText(forread[7])
-			self.labelTypeFond.setText(forread[0])
-			self.lableNumber.setText(str(forread[2]))
-			self.lableGifter.setText(forread[3])
-			self.lablePoint.setText(forread[4])
-			self.textBrowserDescription.setHtml(forread[5])
 		
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -1311,12 +1297,10 @@ class UiReadForm(Ui_readForm):
 	def Del(self):  # Удаление экспоната из базы данных
 		try:
 			logging.info(f'{self.__class__.__name__} - Del')
-			selection = forread[6]
-			subselection = forread[7]
 
 			db = cluster['Все']
 			collection = db['none']
-			collection.delete_one({'Name': forread[1]})
+			collection.delete_one({'Name': self.forread[1]})
 
 			fondSelf.refresh()
 			readForm.hide()
@@ -1600,12 +1584,6 @@ class editForm(Ui_addForm):
 	def next(self): # Переход на следующюю страницу и сохранение текущих характеристик
 		try:
 			logging.info(f'{self.__class__.__name__} - next')
-			global selectionAdd
-			global subselectionAdd
-			global fondsAdd
-			global nameAdd
-			global numberAdd
-
 			selectionAdd = self.Section.currentText()
 			subselectionAdd = self.Subselection.currentText()
 
@@ -1618,12 +1596,17 @@ class editForm(Ui_addForm):
 			numberAdd = self.lineEditNumber.text()
 
 			wineditForm.hide()
+			uEFT.selectionAdd = selectionAdd
+			uEFT.subselectionAdd = subselectionAdd
+			uEFT.fondsAdd = fondsAdd
+			uEFT.nameAdd = nameAdd
+			uEFT.numberAdd = numberAdd
 			wineditFormTwo.show()
 		
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
 
-	def Substitution(self):
+	def Substitution(self, forread):
 		try:
 			logging.info(f'{self.__class__.__name__} - Substitution')
 			self.Section.setCurrentText(forread[6])
@@ -1737,11 +1720,11 @@ class editFormPartTwo(Ui_addFormTwo):
 	def save(self): # Сохранение экспаната в базу данных
 		try:
 			logging.info(f'{self.__class__.__name__} - save')
-			selection = selectionAdd
-			subselection = subselectionAdd
-			fonds = fondsAdd
-			Name = nameAdd
-			number = numberAdd
+			selection = self.selectionAdd
+			subselection = self.subselectionAdd
+			fonds = self.fondsAdd
+			Name = self.nameAdd
+			number = self.numberAdd
 			gifter = self.lineEditGifter.text()
 			point = self.lineEditPoint.text()
 			description = self.textEditDescription.toPlainText()
@@ -1752,12 +1735,12 @@ class editFormPartTwo(Ui_addFormTwo):
 			post = {'fonds': fonds, 'select': selection, 'subselect': subselection , 'Name': Name, 'number': number, 'gifter': gifter, 'point': point, 'description': description}
 
 			if Name != '':
-				if str(Name) == str(forread[1]):
-					collection.update_one({'Name': forread[1]}, {'$set': post})
+				if str(Name) == str(self.forread[1]):
+					collection.update_one({'Name': self.forread[1]}, {'$set': post})
 					self.mainOpen()
 
 				elif collection.count_documents({'Name': Name}) == 0:
-					collection.update_one({'Name': forread[1]}, {'$set': post})
+					collection.update_one({'Name': self.forread[1]}, {'$set': post})
 					self.mainOpen()
 
 				else:
@@ -1768,9 +1751,10 @@ class editFormPartTwo(Ui_addFormTwo):
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
 
-	def Substitution(self):
+	def Substitution(self, forread):
 		try:
 			logging.info(f'{self.__class__.__name__} - Substitution')
+			self.forread = forread
 			self.lineEditGifter.setText(forread[3])
 			self.lineEditPoint.setText(forread[4])
 			self.textEditDescription.setPlainText(forread[5])
@@ -1852,9 +1836,6 @@ class wSingIn(Ui_SingIn):
 			self.listWidget.itemDoubleClicked.connect(self.open)
 			self.editButton.clicked.connect(lambda: self.edit())
 			self.removeButton.clicked.connect(lambda: self.showDialog())
-
-			global singInSelf
-			singInSelf = self
 		
 		except Exception:
 			logging.critical(traceback.format_exc().replace('"', '\'')) # Вывожу ошибку в log файл
@@ -1951,7 +1932,7 @@ class wSingIn(Ui_SingIn):
 
 			if test == 'Ok':
 				Main.show()
-				uimain.setTitle(Main, name)
+				uimain.setTitle(name)
 				winSingIn.close()
 		
 		except Exception:
@@ -2217,6 +2198,12 @@ try:
 	uEDB = wEditDB()
 	uEDB.setupUi(winEditDB)
 
+	winFond = QtWidgets.QWidget()
+	uiFond = Fond()
+
+	winSubselection = QtWidgets.QWidget()
+	uiSubselection = UiSubselection()
+	
 	winSingIn.show()
 
 except Exception:
